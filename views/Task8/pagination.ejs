@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <% if(hasPreviousPage) { %>
+       <li><a href="/task8?pages=1&direction=<%= sortBy %>&direction=<%= sortDirection %>"><<</a></li>
+       <% } else {%>
+        <li class="disabled"><<</li>
+        <% } %>
+       <% if(hasPreviousPage) { %>
+           <li><a href="/task8?pages=<%= prevPage %>&sort=<%= sortBy %>&direction=<%= sortDirection %>"><</a></li>
+           <% } else {%>
+            <li class="disabled"><</li>
+            <% } %>
+       <li><span>  <%= page %> </span></li>
+            <% if(hasNextPage) { %>      
+      <li><a href="/task8?pages=<%= nextPage %>&sort=<%= sortBy %>&direction=<%= sortDirection %>">></a></li> 
+      <% } else { %>
+        <li class="disabled">></li> 
+      <% } %>  
+      <% if(hasNextPage) { %> 
+      <li><a href="/task8?pages=5000&sort=<%= sortBy %>&direction=<%= sortDirection %>">>></a></li>
+      <% } else { %>
+        <li class="disabled">>></li> 
+      <% } %>
+    </ul>
+</body>
+</html>

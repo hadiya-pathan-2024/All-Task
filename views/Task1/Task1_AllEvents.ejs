@@ -1,0 +1,213 @@
+<html>
+    <body onload="checkCookies()" ononline="onFunction()" onoffline="offFunction()" onclick="active()">
+        <style>
+            body{
+                color: grey;
+                
+            }
+            p{
+                font-size: 10px;
+            }
+            textarea{
+                font-size: 10px;
+            }
+            summary{
+                font-size: 10px;
+            }
+            details{
+                font-size: 5px;
+            }
+        </style>
+        <center>
+        <table border="1">
+            <tr>
+                <td style="height: 50px; width: 50px; background-color: black;" >
+                    <p>UpperCase</p>
+                    <input type="text" id="td4" oninput="upperCase()" size="4">
+                </td>
+                <td style="height: 50px; width: 50px; cursor: pointer;" onclick="td1()" id="td1" ><p>OnClick</p></td>
+                <td style="height: 50px; width: 50px; background-color: black; ">
+                <p>OnChange</p>
+                <input type="text" id="td5" onchange="onChangeUpperCase()" size="4">
+                </td>
+                <td style="height: 50px; width: 50px; cursor: pointer;" ondblclick="td2()" id="td2"><p>OnDoubleClick</td>
+                <td style="height: 50px; width: 50px; background-color: black;" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)"></td>
+            </tr>
+
+            <tr>
+                <td style="height: 50px; width: 50px;"><p id="td3"></p></td>
+                <td style="height: 50px; width: 50px; background-color: black;" onmousedown="onDown(this)" onmouseup="onUp(this)"></td>
+                <td style="height: 50px; width: 50px;" onblur="td6()"></td>
+                <td style="height: 50px; width: 50px; background-color: black;">
+                    <p>OnFocus</p>
+                <input type="text" onfocus="onFocus(this)" size="4">
+                </td>
+                <td style="height: 50px; width: 50px;" on></td>
+            </tr>
+            <tr>
+                <td style="height: 50px; width: 50px; background-color: black;" id="td7">
+                    <input type="text" onpaste="paste()" value="Try to paste here" size="4">
+                </td>
+                <td style="height: 50px; width: 50px;" id="td12"></td>
+                <td style="height: 50px; width: 50px; background-color: black;" >
+                <input type="text" oncopy="copy()" value="Try to copy me" size="4">
+                <p id="demo"></p>
+                </td>
+                <td style="height: 50px; width: 50px;" >
+               
+                </td>
+                <td style="height: 50px; width: 50px; background-color: black;" id="td9">
+                <input type="text"  value="Select some text" onselect="selecting()">
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 50px; width: 50px;">
+                <details ontoggle="toggling()">
+                <summary>Copyright 2001-2024</summary>
+                <p>This is details element and you are using it using html and javascript</p>
+                </details>
+                </td>
+                <td style="height: 50px; width: 50px; background-color: black;">
+                <input type="text" value="Click this textBox">
+                <button>Button</button>
+                </td>
+                <td style="height: 50px; width: 50px;" id="td10"></td>
+                <td style="height: 50px; width: 50px;background-color: black;" id="td8">
+                    <textarea onscroll="scrolling()" style="overflow: scroll;">Hello! This is onscroll function of javaScript
+                        and we are learning js. And we are practicing it.
+                        </textarea>
+                </td>
+                <td style="height: 50px; width: 50px;">
+                <p id="td11">Click anywhere</p>
+                </td>
+            </tr>
+        </table>
+    </center>
+    <script>
+        //onclick
+        function td1(){
+            alert("OnClick pressed");
+        }
+
+        //doubleclick
+        function td2(){
+            alert( "DoubleClickPressed " + Date());
+        }
+
+        //onload
+        function checkCookies(){
+            let text = "";
+            if(navigator.cookieEnabled == true)
+            {
+                text = "Cookies are Enabled";
+            }else{
+                text = "Cookies are Disabled";
+            }
+            document.getElementById("td3").innerHTML = text;
+        }
+
+        // uppercase
+        function upperCase(){
+            const x = document.getElementById("td4");
+            x.value = x.value.toUpperCase();
+        }
+
+        // onchange
+        function onChangeUpperCase(){
+            const x = document.getElementById("td5");
+            x.value = x.value.toUpperCase();
+        }
+
+        // onmouseover and onmouseout
+        function mouseOver(obj){
+            obj.innerHTML = "MouseOver";
+        }
+        function mouseOut(obj){
+            obj.innerHTML = "MouseOverMe";
+        }
+
+        //onmouseup and onmousedown
+        function onDown(obj){
+            obj.style.backgroundColor = "green";
+            obj.innerHTML = "Release me";
+        }
+        function onUp(obj){
+            obj.backgroundColor = "red";
+            obj.innerHTML = "Thank you";
+        }
+
+        //onblur = toUpper
+
+        //onFocus
+        function onFocus(obj)
+        {
+            obj.style.backgroundColor = "grey";
+        }
+
+        //oncopy
+        function copy() {
+                document.getElementById("demo").innerHTML = "You copied text!"
+                }
+
+        //onpaste
+        function paste(){
+            document.getElementById("td7").innerHTML = "You pasted text!!"
+        }
+
+        //online and offline
+        function onFunction() {
+        document.getElementById("demo").innerHTML = "Your browser is working online.";
+        }
+
+        function offFunction() {
+        document.getElementById("demo").innerHTML = "Your browser is working offline.";
+        }
+
+        //onscroll
+       
+        function scrolling(){
+            alert("Scrolling");
+        document.getElementById("td8");
+        }
+
+        //onselect
+        function selecting(){
+            alert("You selected some text");
+        }
+
+        //ontoggle
+        function toggling(){
+            alert("Ontoggle event occurred")
+    }
+
+    //onactive
+    function active(){
+        const element = document.activeElement.tagName;
+        document.getElementById("td10").innerHTML = element;
+    }
+
+    //addeventlistener
+    document.addEventListener("click",listning);
+
+    function listning(){
+        document.body.style.backgroundColor = "lightpink";
+    }
+
+    //Multiple Eventlisteners
+    document.addEventListener("mouseover",func1);
+    function func1(){
+        document.getElementById("td12").innerHTML = "Mouse Over";
+    }
+    
+    document.addEventListener("click",func2);
+    function func2(){
+        document.getElementById("td12").innerHTML = "Clicked";
+    }
+    document.addEventListener("mouseout",func3);
+    function func3(){
+        document.getElementById("td12").innerHTML = "Mouse Out";
+    }
+
+    </script>
+    </body>
+</html>

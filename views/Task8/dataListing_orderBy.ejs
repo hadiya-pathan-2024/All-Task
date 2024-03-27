@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th{
+            border: 1px solid black;
+            padding: 10px;
+        }
+        td{
+            border: 1px solid black;
+            padding: 06px;
+        }
+        .disabled{
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.6;
+        }
+        ul{
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        li{
+            list-style: none;
+            font-size: 30px;    
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- <form action="/search">
+        Search: <input type="text" name="name">
+        <input type="submit" name="submit" value="search">
+    </form>
+    <br><br><br> -->
+    <table>
+        <tr>
+            <th><a href="/task8?sort=firstName&direction=<%= sortBy === 'firstName' && sortDirection === 'asc' ? 'desc' : 'asc' %>">First Name</a></th>
+            <th><a href="/task8?sort=lastName&direction=<%= sortBy === 'lastName' && sortDirection === 'asc' ? 'desc' : 'asc' %>">Last Name</a></th>
+            <th>DOB</th>
+            <th>Contact</th>
+            <th>Email Id</th>
+            <th><a href="/task8?sort=Address&direction=<%= sortBy === 'Address' && sortDirection === 'asc' ? 'desc' : 'asc' %>">Address</a></th>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+            <th>Zip Code</th>
+            <th>Blood Group</th>
+            <th>Created At</th>
+        </tr>
+        <% data.forEach(entry => { %>
+        <tr>
+            <td><%= entry.firstName %></td>
+            <td><%= entry.lastName %></td>
+            <td><%= entry.DOB %></td>
+            <td><%= entry.contactNum %></td>
+            <td><%= entry.emailId %></td>
+            <td><%= entry.Address %></td>
+            <td><%= entry.City %></td>
+            <td><%= entry.State %></td>
+            <td><%= entry.country %></td>
+            <td><%= entry.zipCode %></td>
+            <td><%= entry.bloodGroup %></td>
+            <td><%= entry.createdAt %></td>
+        </tr>   
+  <% }) %>  
+    </table>
+   
+   <br><br><br>
+<div>
+   <%- include('./pagination',{currentPage,sortBy,sortDirection}) %> 
+</div>
+</body>
+</html>

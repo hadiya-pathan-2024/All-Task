@@ -1,0 +1,90 @@
+<html>
+    <body>
+     
+        <style>
+            td{
+                height: 60px;
+                width: 80px;
+            }
+            tr:nth-of-type(even) td:nth-of-type(even) , tr:nth-of-type(odd) td:nth-of-type(odd){
+                background-color: black;
+            }
+        </style>
+        <h1>Dynamically Adding Rows And Columns</h1>
+        <input type="button" id="add1"  onclick="addCol()" value="Add Column" style="background-color: green;">
+        <input type="button" id="add2" value="Remove Column" style="background-color: red;" onclick="deleteColumn()">
+        <br>
+        <table border="1" id="main">
+        <tr>
+            <td></td>
+            <td></td>  
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>         
+        </tr>
+        
+         </table>
+         <input type="button" id="add1" value="Add Row" style="background-color: green;" onclick="addRow()">
+        <input type="button" id="add2" value="Remove Row" style="background-color: red;" onclick="removeRow()">
+         <script>
+            function addRow(){
+                // let table = document.getElementById("main");
+                // let rowsLenght = table.rows;
+                // // console.log(rowsLenght);
+                // let cols = table.rows[0].cells.length;
+                // // console.log(cols);
+                // let row = table.insertRow(rowsLenght.length);
+                // // console.log(row);
+                // let cell;
+                // for(var i=0;i<cols;i++){
+                //     cell = row.insertCell(i);
+                //     console.log(cell)
+                // }
+
+                document.querySelector("table").appendChild(document.querySelector("tr").cloneNode("true"))
+            }
+
+            
+
+            // function addCol(){
+            //     var table = document.getElementById("main");
+            //     var rowsLenght = table.rows;
+            //     var cols = table.rows[0].cells.length;
+            //     var cell;
+            //     for(var i=0;i<rowsLenght.length;i++){
+		    //     cell = rowsLenght[i].insertCell(cols-1);
+            //     }
+            // }
+            function addCol(){
+                document.querySelectorAll("tr").forEach((tr)=>{
+                    let td = document.createElement("td");
+                    tr.appendChild(td);
+                })
+            }
+
+
+            function deleteColumn() {
+            // var table = document.getElementById("main");
+            // var rowCount = table.rows.length;
+            // let index = 2;
+            // for (var i = 0; i < rowCount; i++) {
+            //     table.rows[i].deleteCell(index);
+            // }
+
+            if(document.querySelectorAll("tr")[0].childElementCount>2){
+                document.querySelectorAll("tr").forEach((tr)=>{
+                    tr.removeChild(tr.lastChild);
+                })
+            }
+        }
+
+        function removeRow() {
+            // document.getElementById("main").deleteRow(2);
+            if(document.querySelectorAll("tr").length>2){
+                document.querySelector("table").removeChild(document.querySelector("table").lastChild);
+            }
+            }
+         </script>        
+    </body>
+</html>

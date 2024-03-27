@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <style>
+            td{
+                height: 30px;
+                width: 30px;
+                cursor: pointer;
+            }
+            .newlighter{
+                opacity: 0.3;
+            }
+            .light{
+                opacity: 0.3;
+            }
+            body{
+                background-color: red;
+            }
+            
+        </style>
+    </head>
+    <body onload="addtable()" id="timecount" > 
+        <h1>HADIYA PATHAN Date:02-02-2024</h1>
+     
+        
+        <h4 id="Timer" style="color: white; " ></h4>
+        <h4 id="scoreId" style="color: white; text-align: center;" ></h4>
+        <table border="1" align="center" id="t1"  style="border-color: white; border-style: ridge; margin-top:150px;">
+            <tr id="row1">
+                <td style="background-color: blue;"></td>
+                <td style="background-color: blue;"></td>
+            </tr>
+            <tr>
+                <td style="background-color: blue;"></td>
+                <td style="background-color: blue;"></td>
+            </tr>
+        </table>
+        <script>
+            
+              var timeLeft = 10;
+                var downloadTimer = setInterval(function(){
+                    if(timeLeft <= 0)
+                    {
+                        clearInterval(downloadTimer);
+                        document.getElementById("Timer").innerHTML = "Finished";
+                        document.getElementsByTagName("body")[0].innerHTML = `
+                        <h2 style="margin-top:300px; margin-left:40%";> Total Score : ${scoreTotal}</h2>`;
+                        let button = document.createElement('BUTTON');
+                        button.innerHTML = "Play Again";
+                        button.style.marginLeft = '40%';
+                        button.addEventListener("click",function(){
+                            window.location.reload();
+                        });
+                    
+                        document.getElementsByTagName("body")[0].appendChild(button);
+                    }
+                        else{
+                            document.getElementById("Timer").innerHTML = timeLeft + ": seconds remaining";
+
+                        }
+                        timeLeft -= 1;          
+                }, 1000);
+
+            var scoreTotal = "";
+            function playGame()
+            {
+                addnewrow();
+                addmoreColumns();
+                addtable();
+                modifyColor();
+                scoreTotal++;
+                document.getElementById("scoreId").innerHTML = "Your Score is: " + scoreTotal;
+                
+            }
+
+            function addtable()
+            {              
+                var t1 = document.getElementById("t1");
+                var tdcell = t1.getElementsByTagName("td");
+                var randomvalue = Math.floor(Math.random()*(tdcell.length-0));
+
+                const colorChange = modifyColor();
+
+                for(var i=0;i<tdcell.length;i++){
+                    if(i === randomvalue)
+                    {
+                        tdcell[i].style.backgroundColor = 'rgb(' + colorChange.red + ',' + colorChange.green + ',' + colorChange.pink + ')';
+                        tdcell[i].style.opacity="0.5";
+                    }
+                    else {
+                        tdcell[i].style.backgroundColor = 'rgb(' + colorChange.red + ',' + colorChange.green + ',' + colorChange.pink + ')';
+                        tdcell[i].removeEventListener("click",playGame);
+                        tdcell[i].style.opacity="1";
+                    }
+                    
+                }
+
+                tdcell[randomvalue].addEventListener("click",playGame);
+            }
+
+            function addnewrow()
+            {
+                var tableid = document.getElementById("t1");
+                var rowscount = document.getElementById("row1").cells.length;
+                var rows = tableid.insertRow();
+                for(i=0;i<rowscount;i++)
+                {
+                    rows.insertCell();
+                }
+            }
+
+            function modifyColor()
+            {
+                var red = Math.floor(Math.random()*(255-0+1));
+                var green = Math.floor(Math.random()*(255-0+1));
+                var pink = Math.floor(Math.random()*(255-0+1));
+
+                return {red,green,pink}
+            }
+
+            function addmoreColumns(){
+                var newtableId = document.getElementById("t1");
+                for(i=0;i<newtableId.rows.length;i++)
+                {
+                    var addcell = newtableId.rows[i].insertCell(newtableId.rows[i].cells.length)
+                }
+            }
+
+                 //Timer
+                //  var timeLeft = 10;
+                // var elem = document.getElementById('Timer');
+                // var timerId = setInterval(countdown, 1000);
+           
+
+                // function countdown() {
+                // if (timeLeft == 0) {
+                //     clearTimeout(timerId);
+                //     doSomething();
+                   
+                // } else {
+                //     elem.innerHTML = 'Time left: ' + timeLeft;
+                //     timeLeft--;
+                // }
+                // }
+
+                // function doSomething(){
+                //     document.location.href="Exercise_JS_Over.html";
+
+
+                // }
+
+              
+
+        </script>
+    </body>
+</html>
