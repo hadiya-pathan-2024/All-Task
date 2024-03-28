@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<b>ID: </b><p id="mainId"></p>
+<b>Title:</b> <p id="title"></p>
+<b>Body:</b><p id="body"> </p> 
+
+<!-- comments -->
+<p id="postId"></p>
+<p id="id1"></p>
+<p id="name"></p>
+<p id="email"></p>
+<p id="body1"></p>
+<div id="mainDiv"></div>
+<input type="button" value="Show comments" id="comments" onclick="commentFunc()">
+</body>
+<script>
+    let maindiv = document.getElementById("mainDiv");
+    let id = document.getElementById("mainId");
+    let title = document.getElementById("title");
+    let body = document.getElementById("body");
+    let url = window.location.href;
+
+    let queryString =window.location.search;
+    let urlParameters = new URLSearchParams(queryString);
+    let idReq = urlParameters.get("id");
+
+    const urlIndividual = `https://jsonplaceholder.typicode.com/posts/${idReq}`;
+    const urlComment = `https://jsonplaceholder.typicode.com/posts/${idReq}/comments`;
+    let link = fetch(urlIndividual);
+    link.then((res)=>{
+        return res.json();
+    }).then((data)=>{
+        id.innerText=data.id;
+        title.innerText=data.title;
+        body.innerText=data.body;
+
+    })
+
+    function commentFunc(){
+    let commentLink = fetch(urlComment);
+    commentLink.then((res)=>{
+        return res.json();
+    }).then((data)=>{
+        // postId.innerText=data[0].postId;
+        // id1.innerText=data[0].id;
+        // name.innerText=data[0].name;
+        // email.innerText=data[0].email;
+        // body1.innerText=data[0].body;
+        data.map((val)=>{
+            // console.log(val)
+            let div = document.createElement('div');
+            div.style.border = "1px solid black";
+            div.style.marginBottom = "30px";
+            let p1 = document.createElement('p');
+            let p2 = document.createElement('p');
+            let p3 = document.createElement('p');
+            let p4 = document.createElement('p');
+            let p5 = document.createElement('p');
+            p1.innerText=val.postId;
+            p2.innerText=val.id;
+            p3.innerText=val.name;
+            p4.innerText=val.email;
+            p5.innerText=val.body;
+
+            div.appendChild(p1);
+            div.appendChild(p2);
+            div.appendChild(p3);
+            div.appendChild(p4);
+            div.appendChild(p5);
+            maindiv.appendChild(div);
+            comments.style.display = 'none';
+
+        })
+    })
+    }
+</script>
+</html>

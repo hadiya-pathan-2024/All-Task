@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .disabling{
+            opacity: 0.5;
+            cursor: not-allowed;
+            }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <form id="form" action="/forgot" method="POST">
+    <h1 style="margin-bottom: 0px">Forgot Password?</h1>
+    <p style="margin-bottom: 20px; color: #8a8484">
+      Let's reset it.
+  </p>
+<div>
+    
+    <input type="password" class="form-control" placeholder="Enter new password" name="password1" id="pass" autocomplete="off"/>
+    <span id="perror" class="hidden"></span>
+    <input type="password" class="form-control" placeholder="Enter new password again" name="password2" id="pass2" autocomplete="off"/>
+    <span id="reerror" class="hidden"></span>
+    <button id="signin-btn" class="disabling" style="background-color: green;" disabled>Process</button>
+  </form>
+</div>
+</body>
+<script>
+    const $ = (selector) => {
+    return document.querySelector(selector);
+}
+var submitBtn = $("#signin-btn");
+var password = $("#pass");
+var success, repass_success;
+
+// const Toast2 = Swal.mixin({
+//     toast: true,
+//     position: 'top',
+//     showConfirmButton: false,
+//     timer: 3000,
+//     timerProgressBar: true,
+//     didOpen: (toast) => {
+//         toast.addEventListener('mouseenter', Swal.stopTimer)
+//         toast.addEventListener('mouseleave', Swal.resumeTimer)
+//     }
+// })
+
+
+password.addEventListener("keyup", (e) => {
+    errorSpan = document.getElementById("perror");
+    pval = e.target.value;
+    passwordValidationRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/
+    isPasswordCorrect = passwordValidationRegex.test(pval);
+
+    if (isPasswordCorrect) {
+        globalPassword = e.target.value
+        success = true;
+        errorSpan.innerText = "";
+        errorSpan.classList.add("hidden")
+        activateSubmitButton();
+    } else {
+        errorSpan.style.color = "red"
+        errorSpan.innerText = `Password must contain One Capital Letter, One Special Character and Should have a length of more than 8 digits`;
+        errorSpan.classList.remove("hidden")
+        success = false
+        activateSubmitButton();
+    }
+
+})
+let repassword = $("#pass2");
+repassword.addEventListener("keyup", (e) => {
+    let errorSpan = document.getElementById("reerror");
+    let pval = e.target.value;
+    if (pval != globalPassword) {
+        errorSpan.style.color = "red"
+        errorSpan.innerText = `The password you entered earlier and this does not match`
+        errorSpan.classList.remove("hidden")
+        repass_success = false
+        activateSubmitButton();
+    }
+    else if (pval == globalPassword) {
+        errorSpan.innerText = ""
+        errorSpan.classList.add("hidden")
+        repass_success = true
+        activateSubmitButton();
+    }
+
+})
+
+function activateSubmitButton() {
+    if (success && repass_success) {
+        // submitBtn.disabled = false;  
+        activateButton();
+    } else {
+        disableButton();
+        // submitBtn.disabled = true;
+    }
+}
+
+
+function activateButton() {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = 1;
+    submitBtn.addEventListener("mouseenter", (e) => {
+        e.target.style.cursor = "pointer"
+    })
+}
+
+function disableButton() {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = 0.5;
+    submitBtn.addEventListener("mouseenter", (e) => {
+        e.target.style.cursor = "not-allowed"
+    })
+}
+
+// Fetch in post.
+
+let form = $("#form");
+
+form.addEventListener("submit", async(e) => {
+    e.preventDefault();
+    let pass = password.value
+    console.log(pass);
+    let res = await fetch(`/update-password`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            pass
+        })
+    })
+
+    let data = await res.json();
+    if(data.ans == "error"){
+        // Toast2.fire({
+        //     icon: 'warning',
+        //     title: `${data.msg}`
+        // })
+        alert("error")
+    }else if(data.ans == "success"){
+        // swal({
+        //     title: "Password has been changed",
+        //     text: "We have changed your password.",
+        //     button: "Okay, Login",
+        //   })
+          alert("changed password")
+          .then(function() {
+           location.assign("/");
+          });
+    }
+})
+</script>
+</html>

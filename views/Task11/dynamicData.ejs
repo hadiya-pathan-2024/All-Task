@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .input1{
+            width: 50%;
+            height: 50px;
+            font-size: 20px;
+        }
+        .butt{
+            height: 55px;
+            width: 100px;
+            background-color: rgb(170, 166, 166);
+        }
+    
+        .disabled{
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.6;
+        }
+        ul{
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        li{
+            list-style: none;
+            font-size: 30px;    
+        }
+        a{
+            text-decoration: none;
+        }
+        th{
+            border: 1px solid black;
+            padding: 10px;
+            background-color: rgb(156, 150, 150);
+            font-size: 20px;
+        }
+        td{
+            border: 1px solid black;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+    <center><h2>Dynamic Listing </h2><br><br><br>
+    <form action="#" method="get">
+        
+         Query here: <input class="input1" type="text" name="query"> 
+        <input type="submit" value="Go" class="butt">
+    </form>
+    <br><br><br><br>
+    <table>
+        <tr>
+            <% for(let i=0;i<key.length;i++) { %>
+                <th><%= key[i] %></th>
+            <% } %>
+        </tr>
+        <% for(let i=0;i<result.length;i++){ %>
+        <tr>
+                <% for(let j=0;j<key.length;j++){ %>
+                    <td><%= result[i][key[j]] %></td>
+                <% } %>
+        </tr>
+           <% } %>
+        
+    </table>
+
+    <ul>
+        <% if(hasPreviousPage) { %>
+       <!-- <li><a href="/?page=1&query=<%= finalQuery %>"><<</a></li> -->
+       <% } else {%>
+        <!-- <li class="disabled"><<</li> -->
+        <% } %>
+       <% if(hasPreviousPage) { %>
+           <li><a href="/task11?page=<%= prevPage %>&query=<%= finalQuery %>"><</a></li>
+           <% } else {%>
+            <li class="disabled"><</li>
+            <% } %>
+       <li><span>  <%= page %> </span></li>
+            <% if(hasNextPage) { %>      
+      <li><a href="/task11?page=<%= nextPage %>&query=<%= finalQuery %>">></a></li> 
+      <% } else { %>
+        <li class="disabled">></li> 
+      <% } %>  
+      <% if(hasNextPage) { %> 
+      <!-- <li><a href="/?page=20">>></a></li> -->
+      <% } else { %>
+        <!-- <li class="disabled">>></li>  -->
+      <% } %>
+    </ul>   
+</center>
+</body>
+</html>

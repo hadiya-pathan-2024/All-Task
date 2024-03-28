@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .disabling{
+            opacity: 0.5;
+            cursor: not-allowed;
+            }
+    </style>
+        <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css"
+      />  
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <h1>FORGOT PASSWORD</h1>
+    <br><br><br>
+    <form class="form-horizontal" action="/forgot" method="post" id="forgotForm">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="forgotEmail">Email:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="forgotEmail" name="forgotEmail" placeholder="Enter Email">
+              <br><br>
+              <input type="submit" id="signinbtn" class="disabling" onclick="posting()" style="background-color: green; color: black;" value="continue" disabled>
+            </div>
+        </div>
+        <br><br>
+        <a href="/resetPassword" id="reset" style="display: none;">Reset Password?</a>
+    </form>
+        
+</body>
+<script>
+let newform = document.getElementById("forgotForm");
+let textField = document.getElementById("forgotEmail");
+let btn = document.getElementById("signinbtn");
+
+textField.addEventListener("keyup", (e) => {
+    let value = e.target.value;
+    if(!value.length){
+        btn.disabled = true;
+        btn.classList.add("disabling")
+    }else{
+        btn.disabled = false;
+        btn.classList.remove("disabling")
+    }
+});
+
+async function posting() {
+    let email = document.getElementById("forgotEmail").value;
+    btn.innerText = "Please wait..."
+    btn.disabled = true;
+    btn.classList.add("disabling");
+    let ans = await fetch('/forgot-pass', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            email
+        })
+    })
+    console.log(ans);
+    let data = await ans.json();
+    console.log(data);
+    if(data.ans == "error"){
+        btn.disabled = false;
+        btn.innerText = "Continue"
+        alert('Invalid Credentials');
+        btn.classList.remove("disabling");
+    }else if(data.ans == "success"){
+        btn.innerText = "Check Another Page"
+        alert('Check Reset Password page')
+        document.getElementById("reset").style.display = 'block';
+        
+    }
+
+
+}
+</script>
+</html>

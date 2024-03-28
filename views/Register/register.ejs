@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden{
+            display: none;
+            }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <h3>Name: Hadiya Pathan Date: 20-03-2024</h3>
+    <h1>REGISTRATION FORM</h1>
+    <br><br><br>
+    <form class="form-horizontal" action="/register" method="post" id="register_form">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="fname">First Name:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name">
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="lname">Last Name:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name">
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" onkeyup="checkIfExistsEmail(this)">
+               <span class="hidden" id="email_available" style="color: green;">This email is available</span>
+          <span class="hidden" id="email_unavailable" style="color: red;">This email is not available</span>
+          <span style="color: red;" id="correct"></span>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="password">Password:</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+          </div>
+          <span id="perror" class="hidden"></span>
+        </div>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="repassword">Retype Password:</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="repassword" name="repassword" placeholder="Retype password">
+            </div>
+            <span id="reerror" class="hidden"></span>
+        </div>
+        <br>
+        <center>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-default" id="submit" style="background-color: green;" value="Submit">
+              </div>
+            </div>
+        </center> 
+      </form>
+</body> 
+<script>
+
+let submitBtn = document.getElementById('submit');
+let emailExists;
+function disableButton() {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = 0.5;
+    submitBtn.addEventListener("mouseenter", (e) => {
+        e.target.style.cursor = "not-allowed"
+    })
+}
+
+function activateButton() {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = 1;
+    submitBtn.addEventListener("mouseenter", (e) => {
+        e.target.style.cursor = "pointer"
+    })
+}
+disableButton();
+
+let success = false;
+let repass_success = false;
+
+let password = document.getElementById("password");
+let errorSpan, pval, passwordValidationRegex, isPasswordCorrect;
+password.addEventListener("keyup", (e) => {
+    errorSpan = document.getElementById("perror");
+    pval = e.target.value;
+    passwordValidationRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/
+    isPasswordCorrect = passwordValidationRegex.test(pval);
+
+    if (isPasswordCorrect) {
+        globalPassword = e.target.value
+        success = true;
+        errorSpan.innerText = "";
+        errorSpan.classList.add("hidden")
+        activateSubmitButton();
+    } else {
+        errorSpan.style.color = "red"
+        errorSpan.innerText = `Password must contain One Capital Letter, One Special Character and Should have a length of more than 8 digits`;
+        errorSpan.classList.remove("hidden")
+        success = false
+        activateSubmitButton();
+    }
+
+})
+let repassword = document.getElementById("repassword");
+repassword.addEventListener("keyup", (e) => {
+    let errorSpan = document.getElementById("reerror");
+    let pval = e.target.value;
+    if (pval != globalPassword) {
+        errorSpan.style.color = "red"
+        errorSpan.innerText = `The password you entered earlier does not match the password`
+        errorSpan.classList.remove("hidden")
+        repass_success = false
+        activateSubmitButton();
+    }
+    else if (pval == globalPassword) {
+        errorSpan.innerText = ""
+        errorSpan.classList.add("hidden")
+        repass_success = true
+        activateSubmitButton();
+    }
+});
+
+////user exixts
+async function checkIfExistsEmail(e, event) {
+    let userEntered = e.value;
+
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Regular expression pattern for email validation
+
+    let isValidEmail = emailRegex.test(userEntered); // Test if the userEntered value matches the emailRegex pattern
+    console.log();
+    if (isValidEmail) {
+        email_success = true;
+        document.getElementById("correct").innerHTML = ""
+        activateSubmitButton();
+    } else {
+        email_success = false;
+        document.getElementById("correct").innerHTML = "This is not a valid email"
+        activateSubmitButton();
+    }
+
+    let ans = await fetch("/check-user-email", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: userEntered
+        })
+    })
+    let data = await ans.json();
+    console.log(data["status"]);
+    if (data["status"] == "not" && userEntered != "") {
+        document.getElementById("email_available").classList.remove("hidden")
+        document.getElementById("email_unavailable").classList.add("hidden")
+        emailExists = true;
+        activateSubmitButton();
+    } else if (data["status"] == "exist" && userEntered != "") {
+        document.getElementById("email_available").classList.add("hidden")
+        document.getElementById("email_unavailable").classList.remove("hidden")
+        emailExists = false;
+        activateSubmitButton();
+    } else {
+        emailExists = false;
+        document.getElementById("email_available").classList.add("hidden")
+        document.getElementById("email_unavailable").classList.add("hidden")
+        activateSubmitButton();
+    }
+}
+
+function activateSubmitButton() {
+    if (success && emailExists && repass_success && email_success) {
+        // submitBtn.disabled = false;  
+        activateButton();
+    } else {
+        disableButton();
+        // submitBtn.disabled = true;
+    }
+}
+
+</script>
+</html>

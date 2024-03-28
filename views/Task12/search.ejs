@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th{
+            border: 1px solid black;
+            padding: 10px;
+            background-color: rgb(156, 150, 150);
+            font-size: 20px;
+        }
+        td{
+            border: 1px solid black;
+            padding: 06px;
+        }
+        .disabled{
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.6;
+        }
+        ul{
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        li{
+            list-style: none;
+            font-size: 30px;    
+        }
+        a{
+            text-decoration: none;
+        }
+        select{
+            font-size: 17px;
+        }
+        #fName{
+            width: 10%;
+            height: 50px;
+        }
+        #lName{
+            width: 10%;
+            height: 50px;
+        }
+        #butt1{
+            width: 50px;
+            height: 50px;
+            background-color: rgb(61, 167, 61) ;
+        }
+        #butt2{
+            width: 50px;
+            height: 50px;
+            background-color: rgb(61, 167, 61) ;
+        }
+        #studId{
+            width: 10%;
+            height: 50px;
+        }
+  
+    </style>
+</head>
+<body>
+    <center><h2>Hadiya Pathan  SEARCH GRID</h2>
+    <!-- <form action="/data" method="get" id="form1">
+        <input type="text" id="studId" name="studentId" placeholder="Student Id" autofocus>
+        <input type="submit" value=Go id="butt1">
+    </form> -->
+    <br>
+    <!-- <a href="" id="hide1" onclick="showFun()">Show More</a> -->
+    <button id="hide1" style="background-color: green; height: 60px; width: 20%;">Click here to SEARCH</button>
+    <br><br><br>
+    <form action="/task12" id="form2">
+        <input type="text" name="firstName" id="fName" placeholder="First Name" >
+        <input type="text" name="lastName" id="lName" placeholder="Last Name" >
+        <select name="option" id="select">
+            <option value="and">AND</option>
+            <option value="or">OR</option>
+        </select>
+        <input type="submit" value="Go" id="butt2">
+    </form>
+        <br><br><br>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>   
+        </tr>
+        <% data.forEach(entry => { %>
+        <tr>
+            <td><%= entry.studentId %></td>
+            <td><%= entry.firstName %></td>
+            <td><%= entry.lastName %></td>
+        </tr>   
+  <% }) %>  
+    </table>
+</center>
+   <br>
+
+<br><br><br>
+</body>
+<script>
+    const btn = document.getElementById('hide1')
+    const form = document.getElementById('form2');
+    form.style.display = 'none';
+    btn.addEventListener('click',() => {
+        
+        if(form.style.display === 'none'){
+            form.style.display = 'block';
+        }else {
+            form.style.display = 'none';
+        }
+    })
+    // let select = document.getElementById('select');
+    // select.addEventListener("change",function handleChange(event){
+    //     console.log(event.target.value)
+    //     if(event.target.value === 'and'){
+    //         const and = document.getElementById('fName');       
+    //         and.setAttribute('required',true)
+    //         const or = document.getElementById('lName');
+    //         or.setAttribute('required',true)
+    //     }
+    // })
+    // select.value;
+</script>
+</html>

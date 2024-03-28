@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th{
+            border: 1px solid black;
+            height: 50px;
+        }
+        td{
+            border: 1px solid black;
+            height: 50px;
+        }
+            .buttons{
+            display:flex;
+            justify-content:center;
+            gap:2rem;
+            }
+</style>
+</head>
+<body>
+<h2>Name: HADIYA PATHAN Date:11_03
+  <br> Employee Id:24DEV074 <br>Task: JSON placeholder API</h2><br><br>
+<table id="posts">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Details</th>
+  </tr>
+</table> 
+    <div class="buttons">
+      <input type="button" id="prev" onclick="nextPrev(-1)" value="Previous"></button>
+      <input type="button" id="btn1" value="1"/>
+      <input type="button" id="next" onclick="nextPrev(1)" value="Next"></button>
+    </div>    
+</body>
+<script>
+let postsPer = document.getElementById("posts");
+let result;
+
+async function runProcess(){
+const url = 'https://jsonplaceholder.typicode.com/posts';
+let response = await fetch(url)
+    // console.log(response)
+    let data = await response.json();
+    // console.log(data);
+      result = data;
+      pagination(1);
+  }
+runProcess();
+let first = document.getElementById("prev");
+let last = document.getElementById("next");
+let btn1 = document.getElementById("btn1");
+let posts = document.getElementById("posts");
+
+
+let i=1;
+if(i==1){
+  first.disabled=true;
+}
+
+function nextPrev(increment){
+  let btn1 = document.getElementById('btn1');
+  let arrTr = document.getElementsByTagName('tr');
+  var rowCount = postsPer.rows.length;
+  for(var j=rowCount-1;j>0;j--){
+    postsPer.deleteRow(j);
+    // arrTr[j].style.display = 'none';
+
+  }
+  i=i+increment;
+  first.disabled=(i===1);
+  last.disabled=(i===10);
+  btn1.setAttribute("value",i);
+  console.log(i);
+  pagination(i);
+}
+
+function pagination(page){
+  let skip = (page-1)*10;
+
+  console.log("page value: "+ page);
+  result.map((val)=> {
+    if(result.indexOf(val)>=skip && result.indexOf(val)<skip + 10){
+      let row = document.createElement('tr');
+      let col1 = document.createElement('td');
+      let col2 = document.createElement('td');
+      let col3 = document.createElement('td');
+      let col4 = document.createElement('td');
+      col1.innerText = val.id;
+      col2.innerText = val.title;
+      col3.innerText = val.body;
+      col4.innerHTML = `<a href="/details?id=${val.id}">Details</a>`
+      row.appendChild(col1);
+      row.appendChild(col2);
+      row.appendChild(col3);
+      row.appendChild(col4);
+      posts.appendChild(row);
+    }
+  });
+
+}
+    
+</script>
+</html>

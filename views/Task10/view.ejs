@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+     th{
+            border: 1px solid black;
+            padding: 10px;
+            background-color: rgb(156, 150, 150);
+        }
+        td{
+            border: 1px solid black;
+            padding: 06px;
+        }
+</style>
+<body>
+<center>
+    <h1><u>Detailed Results</u></h1><br><br>
+    <h3>Student Id: <%= view[0].studentId%></h3>
+    <h3>Student Name: <%= view[0].firstName%></h3>
+    <h3>Presence: <%= atten[0].att%> / 90</h3>
+    <table>
+        <tr>
+            <th>Subject Name</th>
+            <th>Prelim Theory</th>
+            <th>Prelim Practical</th>
+            <th>Terminal Theory</th>
+            <th>Terminal Practical</th>
+            <th>Final Theory</th>
+            <th>Final Practical</th>
+            <th>Obtained</th>
+            <th>Total</th>
+            
+        </tr>
+        <% view.forEach(data => { %>
+            <tr>
+                <td><%= data.subjectName %></td>
+                <td><%= data.PrelimTheory %></td>
+                <td><%= data.PrelimPrac %></td>
+                <td><%= data.TerminalTheory %></td>
+                <td><%= data.TerminalPrac %></td>
+                <td><%= data.FinalTheory %></td>
+                <td><%= data.FinalPrac %></td>
+                <td>
+                    <%= Number(data.PrelimTheory) + Number(data.PrelimPrac) + Number(data.TerminalTheory) +
+                    Number(data.TerminalPrac) + Number(data.FinalTheory) + Number(data.FinalPrac) %></td>
+                <% totalMarks += Number(data.PrelimTheory) + Number(data.PrelimPrac) + Number(data.TerminalTheory) +
+                Number(data.TerminalPrac) + Number(data.FinalTheory) + Number(data.FinalPrac) %>
+                
+                
+                <td>200</td>
+               
+            </tr>
+       <% }) %>
+       <tr>
+        <td colspan="7" rowspan="2"><b>Result</b></td>
+        <td><b><%= totalMarks %></b></td>
+        <td><b>1200</b></td>
+    </tr>
+    </table>
+    <h2>Percentage Obtained: <%= (totalMarks/1200*100).toFixed(2) %>%</h2>
+</center>
+</body>
+</html>

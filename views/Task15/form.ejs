@@ -1,0 +1,1428 @@
+<html>
+    <style>
+        legend{
+                background-color: gray;
+                color: white;
+                padding: 5px 10px;
+        }
+        fieldset {
+        background-color: #eeeeee;
+        }
+        .mainDiv{
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+    </style>
+    <body>
+        <center><h1>JOB APPLICATION FORM</h1></center>
+        
+        <form name="form" id="form1" action="/update" method="post" onsubmit="return validateForm()">
+            
+            <div class="tab">
+              <fieldset> 
+                <legend>Personal Details</legend>
+            Id <input type="hidden" name="id" id="id"  value="<%= data1 ? data1.id : '' %>"><br>
+             First Name <input type="text" name="fname" id="fname" autofocus value="<%= data1 ? data1.firstname : '' %>">
+            <p style="display: inline; visibility: hidden;" id="fnameerror">error</p><br><br>
+            Last Name <input type="text" name="lname" id="lname"  value="<%= data1 ? data1.lastname : '' %>" >
+            <p style="display: inline; visibility: hidden;" id="lnameerror">error</p><br><br>
+            Designation <input type="text" name="desig" id="desig"  value="<%= data1 ? data1.designation : '' %>">
+            <p style="display: inline; visibility: hidden;" id="desigerror">error</p><br><br>
+            Email <input type="text" name="emailid" id="emailid" value="<%= data1 ? data1.email : '' %>">
+            <p style="display: inline; visibility: hidden;" id="emailiderror">error</p><br><br>
+            Phone Number <input type="tel" name="Pnumber" id="Pnumber"  value="<%= data1 ? data1.phone : '' %>">
+            <p style="display: inline; visibility: hidden;" id="Pnumbererror">error</p><br><br>
+            Gender<br>
+            <input type="radio" id="male" name="gender" value="male" <%if(data1 && data1.gender === 'male') {%> checked <%} %>>
+            <label for="male">Male</label><br>
+            <input type="radio" id="female" name="gender" value="female" <%if(data1 && data1.gender === 'female') {%> checked <%} %>>
+            <label for="female">Female</label><br>
+            <input type="radio" id="others" name="gender" value="others" <%if(data1 && data1.gender === 'others') {%> checked <%} %>>
+            <label for="others">Others</label>
+            <p style="display: inline; visibility: hidden;" id="gendererror">error</p><br><br>
+            <label for="status"> Relationship Status</label>
+            <select name="statusRelation" id="statusRelation">
+                <option value="select_relation" <% if(data1 && data1.relation === 'select_relation'){ %> selected <%} %>>Select Relation</option>
+                <option value="Married" <% if(data1 && data1.relation === 'Married'){ %> selected <%} %>>Married</option>
+                <option value="Unmarried"  <% if(data1 && data1.relation === 'Unmarried'){ %> selected <%} %>>Unmarried</option>
+            </select>
+            <p style="display: inline; visibility: hidden;" id="relationerror">error</p><br><br>
+            Address1 <input rows="4" cols="30" id="address" name="add1" value="<%= data1 ? data1.add1 : '' %>">
+            <p style="display: inline; visibility: hidden;" id="addresserror">error</p><br><br>
+            Address2 <input rows="4" cols="30" id="add2" name="add2" value="<%= data1 ? data1.add2 : '' %>"><br><br>
+            City <input type="text" name="city" id="city" value="<%= data1 ? data1.city : '' %>">
+            <p style="display: inline; visibility: hidden;" id="cityerror">error</p><br><br>
+            <label for="state">State</label>
+            <select name="state" id="state">
+                <option value="select_state" <% if(data1 && data1.state === 'select_state'){ %> selected <%} %>>Select State</option>
+                <option value="Gujarat" <% if(data1 && data1.state === 'Gujarat'){ %> selected <%} %>>Gujarat</option>
+                <option value="Maharashta" <% if(data1 && data1.state === 'Maharashtra'){ %> selected <%} %>>Maharashtra</option>
+                <option value="Mumbai" <% if(data1 && data1.state === 'Mumbai'){ %> selected <%} %>>Mumbai</option>
+                <option value="Delhi" <% if(data1 && data1.state === 'Delhi'){ %> selected <%} %>>Delhi</option>
+            </select>
+            <p style="display: inline; visibility: hidden;" id="stateerror">error</p><br><br>
+            Zipcode <input type="text" id="zipcode" name="zipcode" value="<%= data1 ? data1.zipcode : '' %>">
+            <p style="display: inline; visibility: hidden;" id="zipcodeerror">error</p><br><br>
+            Date Of Birth <input type="text" id="dob" name="dob" placeholder="yyyy/mm/dd" value="<%= data1 ? data1.dob : '' %>">
+            <p style="display: inline; visibility: hidden;" id="doberror">error</p><br><br>
+            </fieldset> 
+        </div>
+            <br><br><br>
+           
+            <div class="tab">
+                <fieldset>
+                   <legend>Education Details</legend> 
+                   
+                   <input type="button" value="Add Row" onclick="rowAdd()" style="background-color: green;">
+                   <input type="button" value="Delete Row" onclick="rowDelete()" style="background-color: red;">
+                   <br><br>
+                <div class="mainDiv">
+             
+                 <div class="div">
+               <label for="SBoardName">Board</label>
+               <input type="hidden" id="edu_id" name="edu_id" value="<%= data && data[0] ? data[0].educationid : '' %>">
+               <select name="SBoardName" id="SBoardName">
+                   <option value="select_course" <% if(data && data[0] && data[0].sscboard === 'select_course'){ %> selected <%} %>>Select Board</option>
+                   <option value="GSEB" <% if(data && data[0] && data[0].sscboard === 'GSEB'){ %> selected <%} %>>GSEB</option>
+                   <option value="CBSE" <% if(data && data[0] && data[0].sscboard === 'CBSE'){ %> selected <%} %>>CBSE</option>
+                   <option value="ICSE" <% if(data && data[0] && data[0].sscboard === 'ICSE'){ %> selected <%} %>>ICSE</option>
+               </select>
+               <p style="display: inline; visibility: hidden;" id="sboarderror">error</p>
+               Passing Year <input type="text" name="SPassYear" id="SPassYear" value="<%= data && data[0] ? data[0].spassingyear : '' %>" >
+               <p style="display: inline; visibility: hidden;" id="spasserror">error</p>
+               Percentage <input type="text" name="MPerc" id="Sperc" value="<%= data && data[0] ? data[0].spercentage : '' %>">
+               <p style="display: inline; visibility: hidden;" id="percentageerror">error</p>
+               </div>
+            
+               <div class="div">
+                
+               <label for="SBoardName">Board</label>
+               <input type="hidden" id="edu_id" name="edu_id" value="<%= data && data[1] ? data[1].educationid : '' %>">
+               <select name="SBoardName" id="HBoardName" >
+                   <option value="select_course" <% if(data && data[1] && data[1].sscboard === 'select_course'){ %> selected <%} %>>Select Board</option>
+                   <option value="GSEB" <% if(data && data[1] && data[1].sscboard === 'GSEB'){ %> selected <%} %>>GSEB</option>
+                   <option value="CBSE" <% if(data && data[1] && data[1].sscboard === 'CBSE'){ %> selected <%} %>>CBSE</option>
+                   <option value="ICSE" <% if(data && data[1] && data[1].sscboard === 'ICSE'){ %> selected <%} %>>ICSE</option>
+               </select>
+               <p style="display: inline; visibility: hidden;" id="hboarderror">error</p>
+               Passing Year <input type="text" name="SPassYear" id="HPassYear" value="<%= data && data[1] ? data[1].spassingyear : '' %>">
+               <p style="display: inline; visibility: hidden;" id="hpasserror">error</p>
+               Percentage <input type="text" name="MPerc" id="HPerc" value="<%= data && data[1] ? data[1].spercentage : '' %>">
+               <p style="display: inline; visibility: hidden;" id="Hpercentageerror">error</p>
+               </div>
+
+               <div class="div">
+
+                <label for="SBoardName">Bachelors</label>
+                <input type="hidden" id="edu_id" name="edu_id" value="<%= data && data[2] ? data[2].educationid : '' %>">
+                <select name="SBoardName" id="bcourse" >
+                    <option value="select_course" <% if(data && data[2] && data[2].sscboard === 'select_course'){ %> selected <%} %>>Select Course</option>
+                    <option value="Bscit" <% if(data && data[2] && data[2].sscboard === 'Bscit'){ %> selected <%} %>>Bscit</option>
+                    <option value="BCA" <% if(data && data[2] && data[2].sscboard === 'BCA'){ %> selected <%} %>>BCA</option>
+                    <option value="Btech" <% if(data && data[2] && data[2].sscboard === 'Btech'){ %> selected <%} %>>Btech</option>
+                </select>
+                <p style="display: inline; visibility: hidden;" id="bcourseerror">error</p>
+                Passing Year <input type="text" name="SPassYear" id="bpassyear" value="<%= data && data[2] ? data[2].spassingyear : '' %>">
+                <p style="display: inline; visibility: hidden;" id="bpassyearerror">error</p>
+                Percentage <input type="text" name="MPerc" id="bpercentage" value="<%= data && data[2] ? data[2].spercentage : '' %>"><br>
+                <p style="display: inline; visibility: hidden;" id="bpercentageerror">error</p>
+                </div>
+             
+                <div class="div">
+                
+                <label for="SBoardName">Masters</label>
+                <input type="hidden" id="edu_id" name="edu_id" value="<%= data && data[3] ? data[3].educationid : '' %>">
+                <select name="SBoardName" id="mcourse" >
+                    <option value="select_course" <% if(data && data[3] && data[3].sscboard === 'select_course'){ %> selected <%} %>>Select Course</option>
+                    <option value="Mscit" <% if(data && data[3] && data[3].sscboard === 'Mscit'){ %> selected <%} %>>Mscit</option>
+                    <option value="MCA" <% if(data && data[3] && data[3].sscboard === 'MCA'){ %> selected <%} %>>MCA</option>
+                    <option value="Mtech" <% if(data && data[3] && data[3].sscboard === 'Mtech'){ %> selected <%} %>>Mtech</option>
+                </select>
+                <p style="display: inline; visibility: hidden;" id="mcourseerror">error</p> 
+                Passing Year <input type="text" name="SPassYear" id="mpassyear" value="<%= data && data[3] ? data[3].spassingyear : '' %>">
+                <p style="display: inline; visibility: hidden;" id="mpassyearerror">error</p>
+                Percentage <input type="text" name="MPerc" id="mpercentage" value="<%= data && data[3] ? data[3].spercentage : '' %>">
+                <p style="display: inline; visibility: hidden;" id="mpercentagerror">error</p>
+             </div>
+             </div>
+             
+                 </fieldset> 
+                </div>
+                 
+                 <br><br><br>  
+                 <div class="tab">
+                    <fieldset>
+                        <legend>Work Experience</legend>
+                    <input type="hidden" id="cname" name="cname" value="<%= data3 && data3[0] ? data3[0].experienceid : '' %>">
+                    Company Name <input type="text" name="CName1" id="cname1" value="<%= data3 && data3[0] ? data3[0].company_name : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="cname1error">error</p>
+                    Designation <input type="text" name="Desig1" id="designation1" value="<%= data3 && data3[0] ? data3[0].Designation : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="designation1error">error</p>
+                    From <input type="text" name="From1" id="from1" placeholder="yyyy/mm/dd" value="<%= data3 && data3[0] ? data3[0].from_date : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="from1error">error</p>
+                    To <input type="text" name="To1" id="to1" placeholder="yyyy/mm/dd" value="<%= data3 ? data3[0].to_date : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="to1error">error</p><br><br>
+                 
+                    <input type="hidden" id="cname" name="cname" value="<%= data3 && data3[1] ? data3[1].experienceid : '' %>">
+                    Company Name <input type="text" name="CName1" id="cname2" value="<%= data3 && data3[1] ? data3[1].company_name : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="cname2error">error</p>
+                    Designation <input type="text" name="Desig1" id="designation2" value="<%= data3 && data3[1] ? data3[1].Designation : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="designation2error">error</p>
+                    From <input type="text" name="From1" id="from2" placeholder="yyyy/mm/dd" value="<%= data3 && data3[1] ? data3[1].from_date : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="from2error">error</p>
+                    To <input type="text" name="To1" id="to2" placeholder="yyyy/mm/dd" value="<%= data3 && data3[1] ? data3[1].to_date : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="to2error">error</p><br><br>
+                 
+                    <input type="hidden" id="cname" name="cname" value="<%= data3 && data3[2] ? data3[2].experienceid : '' %>">
+                    Company Name <input type="text" name="CName1" id="cname3" value="<%= data3 && data3[2] ? data3[2].company_name : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="cname3error">error</p>
+                    Designation <input type="text" name="Desig1" id="designation3" value="<%= data3 && data3[2] ? data3[2].Designation : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="designation3error">error</p>
+                    From <input type="text" name="From1" id="from3" placeholder="yyyy/mm/dd" value="<%= data3 && data3[2] ? data3[2].from_date : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="from3error">error</p>
+                    To <input type="text" name="To1" id="to3" placeholder="yyyy/mm/dd" value="<%= data3 && data3[2] ? data3[2].to_date : '' %>">
+                    <p style="display: inline; visibility: hidden;" id="to3error">error</p><br><br>
+                    </fieldset>
+                    <br><br><br> 
+                 </div>
+                
+                 <div class="tab">
+                    <fieldset> 
+                        <legend>Language Known</legend>
+                    <input type="hidden" id="checkname" name="checkname" value="<%= data4 && data4[j] && data4[j].lang_name==='english' ? data4[j].langId : '' %>">
+                    <input type="checkbox" id="englishCheckbox" name="english" value="english" <% if(data4 && data4[j] && data4[j].lang_name==='english' ) {%> checked <% } %> onchange="validateCheckbox()">
+                    <label for="englishCheckbox">English</label>
+                    <input type="checkbox" id="Read1" name="Read1" value="1"  <% if(data4 && data4[j] && data4[j].lang_name==='english' && data4[j].can_read==='1') { %> checked <% } %> disabled>
+                    <label for="Read1">Read</label>
+                    <input type="checkbox" id="Write1" name="Write1" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='english' && data4[j].can_write==='1') { %> checked <% } %> disabled>
+                    <label for="Write1">Write</label>
+                    <input type="checkbox" id="Speak1" name="Speak1" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='english' && data4[j].can_speak==='1') { %> checked <% } %> disabled>
+                    <label for="Speak1">Speak</label><br><br>
+                     <% if(data4 && data4[j] && data4[j].lang_name==='english' ) { j++ %> 
+                     <% } %>
+                        <input type="hidden" id="checkname" name="checkname" value="<%= data4 && data4[j] && data4[j].lang_name==='hindi' ? data4[j].langId : '' %>">
+                        <input type="checkbox" id="hindiCheckbox" name="hindi" value="hindi" <% if(data4 && data4[j] && data4[j].lang_name==='hindi' ) { %> checked <% } %> onchange="validateCheckbox()">
+                        <label for="hindiCheckbox">Hindi</label>
+                        <input type="checkbox" id="Read2" name="Read2" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='hindi' && data4[j].can_read==='1') { %> checked <% } %> disabled>
+                        <label for="Read2">Read</label>
+                        <input type="checkbox" id="Write2" name="Write2" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='hindi' && data4[j].can_write=='1') { %> checked <% } %> disabled>
+                        <label for="Write2">Write</label>
+                        <input type="checkbox" id="Speak2" name="Speak2" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='hindi' && data4[j].can_speak==='1') { %> checked <% } %> disabled> 
+                        <label for="Speak2">Speak</label><br><br> 
+                        <% if(data4 && data4[j] && data4[j].lang_name === 'hindi' ) { j++%> 
+                            <% } %>
+                        <input type="hidden" id="checkname" name="checkname" value="<%= data4 && data4[j] && data4[j].lang_name==='gujarati' ? data4[j].langId : '' %>">
+                        <input type="checkbox" id="gujaratiCheckbox" name="gujarati" value="gujarati" <% if(data4 && data4[j] && data4[j].lang_name==='gujarati' ) { %> checked <% } %> onchange="validateCheckbox()">
+                        <label for="gujaratiCheckbox">Gujarati</label>
+                        <input type="checkbox" id="Read3" name="Read3" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='gujarati' && data4[j].can_read==='1') { %> checked <% } %> disabled>
+                        <label for="Read3">Read</label>
+                        <input type="checkbox" id="Write3" name="Write3" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='gujarati' && data4[j].can_write==='1') { %> checked <% } %> disabled>
+                        <label for="Write3">Write</label>
+                        <input type="checkbox" id="Speak3" name="Speak3" value="1" <% if(data4 && data4[j] && data4[j].lang_name==='gujarati' && data4[j].can_speak==='1') { %> checked <% } %> disabled>
+                        <label for="Speak3">Speak</label>
+                    </fieldset>
+                    <br><br><br> 
+                 </div> 
+                 <div class="tab">
+                    <fieldset>
+                        <legend>Technologies Known</legend>
+                    <input type="hidden" id="langCheck" name="langCheck" value="<%= data6 && data6[i] && data6[i].tech_name==='php' ? data6[i].langId : '' %>">
+                    <input type="checkbox" id="phpCheckboxes" name="phpCheck" value="php" <% if(data6 && data6[i] && data6[i].tech_name==='php' ) {%> checked <% } %> onchange="validateTechnology()">
+                    <label for="phpCheckboxes">PHP</label>
+                    <input type="radio" name="php" id="beginner1" value="beginner" <%if(data6 && data6[i] && data6[i].tech_name==='php' &&  data6[i].level === 'beginner') { %> checked <%} %> disabled>
+                    <label for="beginner1">Beginner</label>
+                    <input type="radio" name="php" id="mid1" value="midiator" <%if(data6 && data6[i] && data6[i].tech_name==='php' &&  data6[i].level === 'midiator') { %> checked <%} %> disabled>
+                    <label for="mid1">Midiator</label>
+                    <input type="radio" name="php" id="expert1" value="expert" <%if(data6 && data6[i] && data6[i].tech_name==='php' &&  data6[i].level === 'expert') { %> checked <%} %> disabled>
+                    <label for="expert1">Expert</label><br><br>
+                    <% if(data6 && data6[i] && data6[i].tech_name==='php' ) {i++%> <% } %>
+                    <input type="hidden" id="langCheck" name="langCheck" value="<%= data6 && data6[i] && data6[i].tech_name==='laravel' ? data6[i].langId : '' %>">
+                    <input type="checkbox" id="laravelCheckboxes" name="laravelCheck" value="laravel" <% if(data6 && data6[i] && data6[i].tech_name==='laravel' ) {%> checked <% } %> onchange="validateTechnology()">
+                    <label for="laravelCheckboxes">Laravel</label>
+                    <input type="radio" name="laravel" id="beginner2" value="beginner" <%if(data6 && data6[i] && data6[i].tech_name==='laravel' &&  data6[i].level === 'beginner') { i++ %> checked <%} %> disabled> 
+                    <label for="beginner2">Beginner</label>
+                    <input type="radio" name="laravel" id="mid2" value="midiator" <%if(data6 && data6[i] && data6[i].tech_name==='laravel' &&  data6[i].level === 'midiator') { i++ %> checked <%} %> disabled>
+                    <label for="mid2">Midiator</label>
+                    <input type="radio" name="laravel" id="expert2" value="expert" <%if(data6 && data6[i] && data6[i].tech_name==='laravel' &&  data6[i].level === 'expert') {i++%> checked <%} %> disabled>
+                    <label for="expert2">Expert</label><br><br>
+                    <% if(data6 && data6[i] && data6[i].tech_name==='laravel' ) {i++%> <% } %>
+                    <input type="hidden" id="langCheck" name="langCheck" value="<%= data6 && data6[i] && data6[i].tech_name==='mysql' ? data6[i].langId : '' %>">
+                    <input type="checkbox" id="mysqlCheckboxes" name="mysqlCheck" value="mysql" <% if(data6 && data6[i] && data6[i].tech_name==='mysql' ) {%> checked <% } %> onchange="validateTechnology()">
+                    <label for="mysqlCheckboxes">MySQL</label>
+                    <input type="radio" name="mysql" id="beginner3" value="beginner" <%if(data6 && data6[i] && data6[i].tech_name==='mysql' &&  data6[i].level === 'beginner') {%> checked <%} %> disabled>
+                    <label for="beginner3">Beginner</label>
+                    <input type="radio" name="mysql" id="mid3" value="midiator" <%if(data6 && data6[i] && data6[i].tech_name==='mysql' &&  data6[i].level === 'midiator') {%> checked <%} %> disabled>
+                    <label for="mid3">Midiator</label>
+                    <input type="radio" name="mysql" id="expert3" value="expert" <%if(data6 && data6[i] && data6[i].tech_name==='mysql' &&  data6[i].level === 'expert') {%> checked <%} %> disabled>
+                    <label for="expert3">Expert</label><br><br>
+                    <% if(data6 && data6[i] && data6[i].tech_name==='mysql' ) {i++%> <% } %>
+                    <input type="hidden" id="langCheck" name="langCheck" value="<%= data6 && data6[i] && data6[i].tech_name==='oracle' ? data6[i].langId : '' %>">
+                    <input type="checkbox" id="oracleCheckboxes" name="oracleCheck" value="oracle" <% if(data6 && data6[i] && data6[i].tech_name==='oracle' ) {%> checked <% } %> onchange="validateTechnology()">
+                    <label for="oracleCheckboxes">Oracle</label>
+                    <input type="radio" name="oracle" id="beginner4" value="beginner" <%if(data6 && data6[i] && data6[i].tech_name==='oracle' && data6[i].level === 'beginner') {%> checked <%} %> disabled>
+                    <label for="beginner4">Beginner</label>
+                    <input type="radio" name="oracle" id="mid4"  value="midiator" <%if(data6 && data6[i] && data6[i].tech_name==='oracle' && data6[i].level === 'midiator') {%> checked <%} %> disabled>
+                    <label for="mid4">Midiator</label>
+                    <input type="radio" name="oracle" id="expert4" value="expert" <%if(data6 && data6[i] && data6[i].tech_name==='oracle' && data6[i].level === 'expert') {%> checked <%} %> disabled>
+                    <label for="expert4">Expert</label>
+                    </fieldset>
+                    <br><br>
+                 </div>
+                 
+            <div class="tab">
+                <fieldset>
+                    <legend>Reference Contact</legend>
+                <input type="hidden" id="ref_id" name="ref_id" value="<%= data5 ? data5[0].referenceid : '' %>">
+                Name <input type="text" name="Cname" id="refname1" value="<%= data5 && data5[0] ? data5[0].ref_name : '' %>">
+                <p style="display: inline; visibility: hidden;" id="refname1error">error</p>
+                Contact Number <input type="text" name="Cnum" id="refcontact1" value="<%= data5 && data5[0] ? data5[0].contact : '' %>">
+                <p style="display: inline; visibility: hidden;" id="refcontact1error">error</p>
+                Relation <input type="text" name="relation" id="refrelation1" value="<%= data5 && data5[0] ? data5[0].relation : '' %>">
+                <p style="display: inline; visibility: hidden;" id="refrelationerror1">error</p><br><br>
+
+                <input type="hidden" id="ref_id" name="ref_id" value="<%= data5 && data5[1] ? data5[1].referenceid : '' %>">
+                Name <input type="text" name="Cname" id="refname2" value="<%= data5 && data5[1] ? data5[1].ref_name : '' %>">
+                <p style="display: inline; visibility: hidden;" id="refname2error">error</p>
+                Contact Number <input type="text" name="Cnum" id="refcontact2" value="<%= data5 && data5[1] ? data5[1].contact : '' %>">
+                <p style="display: inline; visibility: hidden;" id="refcontact2error">error</p>
+                Relation <input type="text" name="relation" id="refrelation2" value="<%= data5 && data5[1] ? data5[1].relation : '' %>">
+                <p style="display: inline; visibility: hidden;" id="refrelationerror2">error</p>
+                </fieldset>
+                <br><br><br>
+            </div>
+        
+            <div class="tab">
+                <fieldset>
+                <legend>Preferences</legend>
+            Preferred Location 
+            <select id="location" name="location">
+                <option value="select_location" <% if(data7 && data7.preferred_location === 'select_location'){ %> selected <%} %>>Select Location</option>
+                <option value="Ahmedabad" <% if(data7 && data7.preferred_location === 'Ahmedabad'){ %> selected <%} %>>Ahmedabad</option>
+                <option value="Delhi" <% if(data7 && data7.preferred_location === 'Delhi'){ %> selected <%} %>>Delhi</option>
+                <option value="Mumbai" <% if(data7 && data7.preferred_location === 'Mumbai'){ %> selected <%} %>>Mumbai</option>
+            </select>
+            <p style="display: inline; visibility: hidden;" id="locationerror">error</p><br><br>
+            Notice Period <input type="text" name="noticeP" id="noticeP" placeholder="1 month" value="<%= data7 ? data7.notice_period : '' %>">
+            <p style="display: inline; visibility: hidden;" id="noticeerror">error</p><br><br>
+            Expected CTC <input type="text" name="expectedCTC" id="expectedCTC" value="<%= data7 ? data7.expected_ctc : '' %>">
+            <p style="display: inline; visibility: hidden;" id="expectederror">error</p><br><br>
+            Current CTC <input type="text" name="currentCTC" id="currentCTC" value="<%= data7 ? data7.current_ctc : '' %>">
+            <p style="display: inline; visibility: hidden;" id="currenterror">error</p><br><br>
+            Department 
+            <select id="department" name="department">
+                <option value="select_department" <% if(data7 && data7.department === 'select_department'){ %> selected <%} %>>Select Department</option>
+                <option value="development" <% if(data7 && data7.department === 'development'){ %> selected <%} %>>Development</option>
+                <option value="design" <% if(data7 && data7.department === 'design'){ %> selected <%} %>>Design</option>
+                <option value="marketing" <% if(data7 && data7.department === 'marketing'){ %> selected <%} %>>Marketing</option>
+            </select>
+            <p style="display: inline; visibility: hidden;" id="departmenterror">error</p><br><br>
+            </fieldset> 
+            </div>
+            <br><br><br>
+            <input type="button" id="prevButton" onclick="nextPrev(-1)" value="Previous">
+            <input type="button" id="nextButton" onclick="nextPrev(1)" value="Next">
+
+            <br><br><br>
+          
+       </form>
+       <input type="submit" id="submitBtn" value="submit" style="display: none;" onclick="postingData()">
+       <script>
+        var currentTab = 0;
+        showTab(currentTab);
+
+        function showTab(n){
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = 'block';
+            for(var i=0;i<x.length;i++)
+            {
+                if(i===currentTab)
+                {
+                    x[i].style.display = 'block';
+                }
+                else{
+                    x[i].style.display = 'none';
+                }
+            }
+
+
+            if(n == 0){
+                document.getElementById('prevButton').style.display = 'none';
+            }
+            else{
+                document.getElementById('prevButton').style.display = 'inline';
+            }
+            if(n == (x.length - 1)){
+                document.getElementById('nextButton').style.display = "none";
+                document.getElementById("submitBtn").style.display = "block";
+            }
+            else{
+                document.getElementById('nextButton').style.display = "block";
+                document.getElementById("submitBtn").style.display = "none";
+            }
+        }
+
+        function nextPrev(n){
+            var x = document.getElementsByClassName("tab");
+            
+            x[currentTab].style.display = 'none';
+    
+            currentTab = currentTab + n;
+
+            if(currentTab >= x.length){
+                document.getElementById('form1').submit();
+                return false;
+            }
+            showTab(currentTab);
+        }
+ 
+            
+        async function postingData(){
+            let id = document.getElementById('id').value;
+            let fname = document.getElementById('fname').value;
+            let lname = document.getElementById('lname').value;
+            let desig = document.getElementById('desig').value;
+            let emailid = document.getElementById('emailid').value;
+            let Pnumber = document.getElementById('Pnumber').value;
+            let address = document.getElementById('address').value;
+            let add2 = document.getElementById('add2').value;
+            let city = document.getElementById('city').value;
+            let state = document.getElementById('state').value;
+            let statusRelation = document.getElementById('statusRelation').value;
+            let zipcode = document.getElementById('zipcode').value;
+            let dob = document.getElementById('dob').value;
+            let gender = document.getElementsByName('gender');
+            let gendervalue;
+
+            for(let i=0;i<gender.length;i++){
+                if(gender[i].checked === true)
+                {
+                    gendervalue = gender[i].value;
+                    break;
+                }
+            }
+
+            //education
+            let count = 0;
+            let edu_id = document.getElementsByName('edu_id');
+            let eduArr = [];
+
+            let SBoardName = document.getElementById('SBoardName').value;
+            let SBoardNameArr = document.getElementsByName('SBoardName');
+            let spassYear = document.getElementsByName('SPassYear');
+            let sperYear = document.getElementsByName('MPerc');
+
+            for(let i=0;i<SBoardNameArr.length;i++)
+            {
+                if(SBoardNameArr[i].value != 'select_course')
+                {
+                    count++;
+                }
+                else{
+                    break;
+                }
+            }
+            let boardArr = [];
+            let yearArr = [];
+            let perArr = [];
+            for(let j=0;j<count;j++)
+            {
+                boardArr.push(SBoardNameArr[j].value.trim())
+                yearArr.push(spassYear[j].value.trim())
+                perArr.push(sperYear[j].value.trim());
+                eduArr.push(edu_id[j].value);
+            }
+
+            /////work experience
+            let countExp=0;
+            let cid = document.getElementsByName('cname');
+            let cidArr = []; 
+            let cname1 = document.getElementById('cname1').value;
+            let cnameArr = document.getElementsByName('CName1');
+            let designationArr = document.getElementsByName('Desig1');
+            let fromArr = document.getElementsByName('From1');
+            let toArr = document.getElementsByName('To1');
+            for(let k=0;k<cnameArr.length;k++)
+            {
+                if(cnameArr[k].value != '')
+                {
+                    countExp++;
+                }
+                else{
+                    break;
+                }
+            }
+            let companyNameArr = [];
+            let companyDesigArr = [];
+            let companyFromArr = [];
+            let companyToArr = [];
+            for(let z=0;z<countExp;z++)
+            {
+                companyNameArr.push(cnameArr[z].value.trim());
+                companyDesigArr.push(designationArr[z].value.trim());
+                companyFromArr.push(fromArr[z].value.trim());
+                companyToArr.push(toArr[z].value.trim());
+                cidArr.push(cid[z].value);
+            }
+
+           // Reference contact
+           //  Ref1
+            let countRef=0;
+            let refName = document.getElementsByName('Cname');
+            let refContact = document.getElementsByName('Cnum');
+            let refRelation = document.getElementsByName('relation');
+            let refid = document.getElementsByName('ref_id');
+            let refArr = [];
+
+            for(let k=0;k<refName.length;k++)
+            {
+                if(refName[k].value != '')
+                {
+                    countRef++;
+                }
+                else{
+                    break;
+                }
+            }
+            let refNameArr = [];
+            let refNumArr = [];
+            let refRelationArr = [];
+            
+            for(let z=0;z<countRef;z++)
+            {
+                refNameArr.push(refName[z].value.trim());
+                refNumArr.push(refContact[z].value.trim());
+                refRelationArr.push(refRelation[z].value.trim());
+                refArr.push(refid[z].value);
+            }
+
+            //preferences
+             let location = document.getElementById('location').value;
+            let noticeP = document.getElementById('noticeP').value;
+            let expectedCTC = document.getElementById('expectedCTC').value;
+            let currentCTC = document.getElementById('currentCTC').value;
+            let department = document.getElementById('department').value;
+
+            //lang_known
+            let langid = document.getElementsByName('checkname');
+            let lidArr = [];
+            for(let i=0;i<langid.length;i++)
+            {
+                lidArr.push(langid[i].value);
+            }
+
+            function langKnownFunc(mainId, ...childId){
+                let objLang = {};
+                let mainCheck = document.getElementById(mainId);
+                
+                let mainCheckVal = mainCheck.value;
+                if(mainCheck.checked === true)
+                {
+                    let arrCheck = [];
+                    for(let id of childId)
+                    {
+                        var idd = document.getElementById(id);
+                        if(idd.checked === true)
+                        {
+                            arrCheck.push('1');
+                        }
+                        else{
+                            arrCheck.push('0');
+                        }
+                       
+                    }
+                    objLang[mainCheckVal] = arrCheck;
+                }
+                return objLang;
+            }
+          
+            let engVal = langKnownFunc("englishCheckbox","Read1","Write1","Speak1");
+            let hindiVal = langKnownFunc("hindiCheckbox","Read2","Write2","Speak2");
+            let gujaratiVal = langKnownFunc("gujaratiCheckbox","Read3","Write3","Speak3");
+
+            let arrlangKnown = [];
+            // if(Object.keys(engVal).length != 0)
+            // {
+                arrlangKnown.push(engVal);
+            // }
+            // if(Object.keys(hindiVal).length != 0)
+            // {
+                arrlangKnown.push(hindiVal);
+            // // }
+            // if(Object.keys(gujaratiVal).length != 0)
+            // {
+                arrlangKnown.push(gujaratiVal);
+            // }
+            console.log(arrlangKnown);
+
+            //technology_known
+            let techid = document.getElementsByName('langCheck');
+            let tidArr = [];
+            for(let i=0;i<techid.length;i++)
+            {
+                tidArr.push(techid[i].value);
+            }
+            console.log(tidArr);
+            console.log(lidArr);
+
+            function techRadio(mainId, ...childId){
+                let objRadio = {};
+                let mainRadio = document.getElementById(mainId);
+                let mainVal = mainRadio.value;
+                if(mainRadio.checked === true)
+                {
+                    for(let id of childId)
+                    {
+                        var idd = document.getElementById(id);
+                        if(idd.checked === true)
+                        {
+                            objRadio[mainVal] = idd.value;
+                            break;
+                        }
+                    }
+                };
+                return objRadio;
+            }
+            
+            let phpVal = techRadio("phpCheckboxes","beginner1","mid1","expert1");
+            let laravelVal = techRadio("laravelCheckboxes","beginner2","mid2","expert2");
+            let mysqlVal = techRadio("mysqlCheckboxes","beginner3","mid3","expert3");
+            let oracleVal = techRadio("oracleCheckboxes","beginner4","mid4","expert4");
+
+            let techKnown = [];
+            // if(Object.keys(phpVal).length != 0)
+            // {
+                techKnown.push(phpVal);
+            // }
+            // if(Object.keys(laravelVal).length != 0)
+            // {
+                techKnown.push(laravelVal);
+            // }
+            // if(Object.keys(mysqlVal).length != 0)
+            // {
+                techKnown.push(mysqlVal);
+            // }
+            // if(Object.keys(oracleVal).length != 0)
+            // {
+                techKnown.push(oracleVal);
+            // }
+            console.log(techKnown);
+            console.log("education: "+eduArr);
+            /////postingg
+            try{
+             await fetch('/saveAjax',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  id,fname,lname,desig,emailid,Pnumber,address,add2,city,state,statusRelation,zipcode,dob,gendervalue,
+                  arrlangKnown,techKnown,boardArr,yearArr,perArr,companyNameArr,companyDesigArr,companyFromArr,companyToArr,
+                  refNameArr,refNumArr,refRelationArr,location,noticeP,expectedCTC,currentCTC,department,eduArr,cidArr,refArr,tidArr,lidArr
+                })
+            }
+            )
+
+        }
+        catch (error){
+        console.log(error);
+    }
+    }
+   
+        // function checkRadio(){
+        //   var data6 = 
+        //   let obj = JSON.parse(data6)
+        //   console.log(obj);
+        // }
+        // checkRadio()
+        function rowAdd(){
+            let div1 = document.getElementsByClassName("div");
+            let mainDiv = document.getElementsByClassName("mainDiv");
+            let copy = div1[0].cloneNode(true);
+            mainDiv[0].appendChild(copy);
+            // var table = document.getElementById('table1');
+            // var rows = table.rows.length;
+
+            // var insert = table.insertRow(rows);
+            // var cell4 = insert.insertCell(0);
+            // var cell1 = insert.insertCell(1);
+            // var cell2 = insert.insertCell(2);
+            // var cell3 = insert.insertCell(3);
+
+            // let boardData = [
+            // "Select Board",
+            // "GSEB",
+            // "HSC",
+            // "BSCIT",
+            // "MSCIT"];
+            // var yearTag = document.createElement("label");
+            // var PercTag = document.createElement("label");
+
+            // var checkbox = document.createElement("input");
+            // var dropdown = document.createElement("select");
+            // boardData.forEach(function(val) {
+            //     let option = document.createElement("option");
+            //     option.innerHTML = val;
+            //     dropdown.appendChild(option);
+            //     })
+            // var year = document.createElement("input");
+            // yearTag.innerText = "Year";
+            // year.append(yearTag);
+            // var percentage = document.createElement("input");
+            // PercTag.innerHTML = "Percentage";
+            // percentage.appendChild(PercTag);
+
+            // checkbox.type = "checkbox"
+            // dropdown.type = "select";
+            // year.type = "text";
+            // percentage.type = "text";
+            // cell4.appendChild(checkbox)
+            // cell1.appendChild(dropdown);
+            // // cell2.appendChild(year);
+            // cell2.appendChild(yearTag)
+            // cell3.appendChild(year);
+            // cell3.appendChild(PercTag);
+            // cell3.appendChild(percentage)
+
+            
+        }
+        function rowDelete(){
+            var div2 = document.getElementsByClassName('div');
+            let mainDiv = document.getElementsByClassName("mainDiv");
+            if(div2.length<=3){
+                return;
+            }
+            mainDiv[0].removeChild(div2[div2.length-1]);
+            
+        }
+        function validateForm(){
+            return true;
+            let fname = document.getElementById('fname').value;
+            let fnameerror = document.getElementById('fnameerror');
+            let lname = document.getElementById('lname').value;
+            let lnameerror = document.getElementById('lnameerror');
+            let desig = document.getElementById('desig').value;
+            let desigerror = document.getElementById('desigerror');
+            let emailid = document.getElementById('emailid').value;
+            let emailiderror = document.getElementById('emailiderror');
+            let Pnumber = document.getElementById('Pnumber').value;
+            let Pnumbererror = document.getElementById('Pnumbererror');
+            let address = document.getElementById('address').value;
+            let addresserror = document.getElementById('addresserror');
+            let city = document.getElementById('city').value;
+            let cityerror = document.getElementById('cityerror');
+            let state = document.getElementById('state').value;
+            let stateerror = document.getElementById('stateerror');
+            let statusRelation = document.getElementById('statusRelation').value;
+            let relationerror = document.getElementById('relationerror');
+            let zipcode = document.getElementById('zipcode').value;
+            let zipcodeerror = document.getElementById('zipcodeerror');
+            let dob = document.getElementById('dob').value;
+            let doberror = document.getElementById('doberror');
+            let gender = document.getElementsByName('gender').value;
+            let gendererror = document.getElementById('gendererror');
+
+           // Education
+
+            //ssc
+            let SBoardName = document.getElementById('SBoardName').value;
+            let sboarderror = document.getElementById('sboarderror');
+            let SPassYear = document.getElementById('SPassYear').value;
+            let spasserror = document.getElementById('spasserror');
+            let Percentage = document.getElementById('Sperc').value;
+            let percentageerror = document.getElementById('percentageerror');
+            //hsc
+            let HBoardName = document.getElementById('HBoardName').value;
+            let hboarderror = document.getElementById('hboarderror');
+            let HPassYear = document.getElementById('HPassYear').value;
+            let hpasserror = document.getElementById('hpasserror');
+            let HPerc = document.getElementById('HPerc').value;
+            let Hpercentageerror = document.getElementById('Hpercentageerror');
+            //bachelors
+            let bcourse = document.getElementById('bcourse').value;
+            let bcourseerror = document.getElementById('bcourseerror');
+            // let buni = document.getElementById('buni').value;
+            // let bunierror = document.getElementById('bunierror');
+            let bpassyear = document.getElementById('bpassyear').value;
+            let bpassyearerror = document.getElementById('bpassyearerror');
+            let bpercentage = document.getElementById('bpercentage').value;
+            let bpercentageerror = document.getElementById('bpercentageerror');
+            //masters
+            let mcourse = document.getElementById('mcourse').value;
+            let mcourseerror = document.getElementById('mcourseerror');
+            // let muni = document.getElementById('muni').value;
+            // let munierror = document.getElementById('munierror');
+            let mpassyear = document.getElementById('mpassyear').value;
+            let mpassyearerror = document.getElementById('mpassyearerror');
+            let mpercentage = document.getElementById('mpercentage').value;
+            let mpercentagerror = document.getElementById('mpercentagerror');
+
+            //work Experience
+            // company 1
+            let cname1 = document.getElementById('cname1').value;
+            let cname1error = document.getElementById('cname1error');
+            let designation1 = document.getElementById('designation1').value;
+            let designation1error = document.getElementById('designation1error');
+            let from1 = document.getElementById('from1').value;
+            let from1error = document.getElementById('from1error');
+            let to1 = document.getElementById('to1').value;
+            let to1error = document.getElementById('to1error');
+
+            // //company 2
+            let cname2 = document.getElementById('cname2').value;
+            let cname2error = document.getElementById('cname2error');
+            let designation2 = document.getElementById('designation2').value;
+            let designation2error = document.getElementById('designation2error');
+            let from2 = document.getElementById('from2').value;
+            let from2error = document.getElementById('from2error');
+            let to2 = document.getElementById('to2').value;
+            let to2error = document.getElementById('to2error');
+
+              //company 3
+            let cname3 = document.getElementById('cname3').value;
+            let cname3error = document.getElementById('cname3error');
+            let designation3 = document.getElementById('designation3').value;
+            let designation3error = document.getElementById('designation3error');
+            let from3 = document.getElementById('from3').value;
+            let from3error = document.getElementById('from3error');
+            let to3 = document.getElementById('to3').value;
+            let to3error = document.getElementById('to3error');
+
+           // Reference contact
+           //  Ref1
+            let refname1 = document.getElementById('refname1').value;
+            let refname1error = document.getElementById('refname1error');
+            let refcontact1 = document.getElementById('refcontact1').value;
+            let refcontact1error = document.getElementById('refcontact1error');
+            let refrelation1 = document.getElementById('refrelation1').value;
+            let refrelationerror1 = document.getElementById('refrelationerror1');
+
+            //Ref2
+            let refname2 = document.getElementById('refname2').value;
+            let refname2error = document.getElementById('refname2error');
+            let refcontact2 = document.getElementById('refcontact2').value;
+            let refcontact2error = document.getElementById('refcontact2error');
+            let refrelation2 = document.getElementById('refrelation2').value;
+            let refrelationerror2 = document.getElementById('refrelationerror2');
+
+            //preferences
+             let location = document.getElementById('location').value;
+            let locationerror = document.getElementById('locationerror');
+            let noticeP = document.getElementById('noticeP').value;
+            let noticeerror = document.getElementById('noticeerror');
+            let expectedCTC = document.getElementById('expectedCTC').value;
+            let expectederror = document.getElementById('expectederror');
+            let currentCTC = document.getElementById('currentCTC').value;
+            let currenterror = document.getElementById('currenterror');
+            let department = document.getElementById('department').value;
+            let departmenterror = document.getElementById('departmenterror');
+
+            if(fname.trim()===""){
+                fnameerror.innerHTML = "First name required*";
+                fnameerror.style.visibility = "visible";
+                fnameerror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z]+$/.test(fname)) {
+                fnameerror.innerHTML = "Invalid First name*";
+                fnameerror.style.visibility = "visible";
+                fnameerror.style.color = "red";
+                return false;
+                }
+            if(lname.trim()===""){
+                lnameerror.innerHTML = "Last name required*";
+                lnameerror.style.visibility = "visible";
+                lnameerror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z]+$/.test(lname)) {
+                lnameerror.innerHTML = "Invalid Last name*";
+                lnameerror.style.visibility = "visible";
+                lnameerror.style.color = "red";
+                return false;
+                }
+            if(desig.trim()===""){
+                desigerror.innerHTML = "Designation required*";
+                desigerror.style.visibility = "visible";
+                desigerror.style.color = "red";
+                return false;
+            }   
+             if (!/^[a-zA-Z]+$/.test(desig)) {
+                desigerror.innerHTML = "Invalid Designation*";
+                desigerror.style.visibility = "visible";
+                desigerror.style.color = "red";
+                return false;
+                }   
+           
+            if(emailid.trim()===""){
+                emailiderror.innerHTML = "Email Id required*";
+                emailiderror.style.visibility = "visible";
+                emailiderror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(emailid)) {
+                emailiderror.innerHTML = "Invalid Email Id*";
+                emailiderror.style.visibility = "visible";
+                emailiderror.style.color = "red";
+                return false;
+                } 
+            if(Pnumber.trim()===""){
+                Pnumbererror.innerHTML = "Contact Number required*";
+                Pnumbererror.style.visibility = "visible";
+                Pnumbererror.style.color = "red";
+                return false;
+            }
+             if (!/^\d{10}$/.test(Pnumber)) {
+                Pnumbererror.innerHTML = "Invalid Contact Number*";
+                Pnumbererror.style.visibility = "visible";
+                Pnumbererror.style.color = "red";
+                return false;
+                }
+                
+            var male = document.getElementById('male').checked 
+            var female = document.getElementById('female').checked 
+            var others = document.getElementById('others').checked
+            if(male === false && female === false && others === false){
+                gendererror.innerHTML = "Gender required*";
+                gendererror.style.visibility = "visible";
+                gendererror.style.color = "red";
+                return false;
+            }
+            if(statusRelation === 'select_relation'){
+                relationerror.innerHTML = "Relation Status required*";
+                relationerror.style.visibility = "visible";
+                relationerror.style.color = "red";
+                return false;
+                }
+            
+            if(address.trim()===""){
+                addresserror.innerHTML = "Address required*";
+                addresserror.style.visibility = "visible";
+                addresserror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z0-9.!#$%&'*@+/=?_{|}~-]+$/.test(address)) {
+                addresserror.innerHTML = "Invalid Address*";
+                addresserror.style.visibility = "visible";
+                addresserror.style.color = "red";
+                return false;
+                }
+            if(city.trim()===""){
+                cityerror.innerHTML = "City required*";
+                cityerror.style.visibility = "visible";
+                cityerror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z]+$/.test(city)) {
+                cityerror.innerHTML = "Invalid City";
+                cityerror.style.visibility = "visible";
+                cityerror.style.color = "red";
+                return false;
+                } 
+             if(state === 'select_state'){
+                stateerror.innerHTML = "State required*";
+                stateerror.style.visibility = "visible";
+                stateerror.style.color = "red";
+                return false;
+                }
+            
+            if(zipcode.trim()===""){
+                zipcodeerror.innerHTML = "Zipcode required*";
+                zipcodeerror.style.visibility = "visible";
+                zipcodeerror.style.color = "red";
+                return false;
+            }
+             if (!/^\d{5}$/.test(zipcode)) {
+                zipcodeerror.innerHTML = "Invalid ZipCode*";
+                zipcodeerror.style.visibility = "visible";
+                zipcodeerror.style.color = "red";
+                return false;
+                }
+            if(dob.trim()===""){
+                doberror.innerHTML = "DOB required*";
+                doberror.style.visibility = "visible";
+                doberror.style.color = "red";
+                return false;
+            }
+            if(!dateValid(dob)){
+                doberror.innerHTML = "Invalid Date";
+                doberror.style.visibility = "visible";
+                doberror.style.color = "red";
+                return false;
+
+                }
+            
+            
+            //education
+            if(SBoardName != 'select_course'){
+            if(SPassYear.trim()===""){
+                spasserror.innerHTML = "Passing year required*";
+                spasserror.style.visibility = "visible";
+                spasserror.style.color = "red";
+                return false;
+            }
+             else if (!/^\d{4}$/.test(SPassYear)) {
+                spasserror.innerHTML = "Invalid passing year";
+                spasserror.style.visibility = "visible";
+                spasserror.style.color = "red";
+                return false;
+                }
+            if(Percentage.trim()===""){
+                percentageerror.innerHTML = "Percentage required*";
+                percentageerror.style.visibility = "visible";
+                percentageerror.style.color = "red";
+                return false;
+            }
+             else if (!/^100(\.(0){0,2})?$|^([1-9]?[0-9])(\.(\d{0,3}))?\%$/.test(Percentage)) {
+                percentageerror.innerHTML = "Invalid Percentage";
+                percentageerror.style.visibility = "visible";
+                percentageerror.style.color = "red";
+                return false;
+                }
+            }
+                //hsc board
+            if(HBoardName != 'select_course'){
+            if(HPassYear.trim()===""){
+                hpasserror.innerHTML = "HSC Passing year required*";
+                hpasserror.style.visibility = "visible";
+                hpasserror.style.color = "red";
+                return false;
+            }
+              else if (!/^\d{4}$/.test(HPassYear)) {
+                hpasserror.innerHTML = "Invalid passing year";
+                hpasserror.style.visibility = "visible";
+                hpasserror.style.color = "red";
+                return false;
+                }
+            if(HPerc.trim()===""){
+                Hpercentageerror.innerHTML = "HSC Percentage required*";
+                Hpercentageerror.style.visibility = "visible";
+                Hpercentageerror.style.color = "red";
+                return false;
+            }
+             else if (!/^100(\.(0){0,2})?$|^([1-9]?[0-9])(\.(\d{0,3}))?\%$/.test(HPerc)) {
+                Hpercentageerror.innerHTML = "Invalid HSC Percentage";
+                Hpercentageerror.style.visibility = "visible";
+                Hpercentageerror.style.color = "red";
+                return false;
+                }
+            }
+
+            if(bcourse != 'select_course'){
+            if(bpassyear.trim()===""){
+                bpassyearerror.innerHTML = "Bachelors Passing year required*";
+                bpassyearerror.style.visibility = "visible";
+                bpassyearerror.style.color = "red";
+                return false;
+            }
+              else if (!/^\d{4}$/.test(bpassyear)) {
+                bpassyearerror.innerHTML = "Invalid Bachelors passing year";
+                bpassyearerror.style.visibility = "visible";
+                bpassyearerror.style.color = "red";
+                return false;
+                }
+            if(bpercentage.trim()===""){
+                bpercentageerror.innerHTML = "Bachelors Percentage required*";
+                bpercentageerror.style.visibility = "visible";
+                bpercentageerror.style.color = "red";
+                return false;
+            }
+              else if (!/^100(\.(0){0,2})?$|^([1-9]?[0-9])(\.(\d{0,3}))?\%$/.test(bpercentage)) {
+                bpercentageerror.innerHTML = "Invalid Bachelors Percentage";
+                bpercentageerror.style.visibility = "visible";
+                bpercentageerror.style.color = "red";
+                return false;
+                }
+            }
+           
+            if(mcourse != 'select_course'){
+                if(mpassyear.trim()===""){
+                mpassyearerror.innerHTML = "Masters Passing year required*";
+                mpassyearerror.style.visibility = "visible";
+                mpassyearerror.style.color = "red";
+                return false;
+            }
+            
+              else if (!/^\d{4}$/.test(mpassyear)) {
+                mpassyearerror.innerHTML = "Invalid Masters passing year";
+                mpassyearerror.style.visibility = "visible";
+                mpassyearerror.style.color = "red";
+                return false;
+                }
+            
+            if(mpercentage.trim()===""){
+                mpercentagerror.innerHTML = "Masters Percentage required*";
+                mpercentagerror.style.visibility = "visible";
+                mpercentagerror.style.color = "red";
+                return false;
+            }
+              if (!/^100(\.(0){0,2})?$|^([1-9]?[0-9])(\.(\d{0,3}))?\%$/.test(mpercentage)) {
+                mpercentagerror.innerHTML = "Invalid Masters Percentage";
+                mpercentagerror.style.visibility = "visible";
+                mpercentagerror.style.color = "red";
+                return false;
+                }       
+            
+        }
+
+            //work experience 
+            //company 1
+             if(cname1.length > 0){
+              if (!/^[a-zA-Z]+$/.test(cname1)) {
+                cname1error.innerHTML = "Invalid Company name";
+                cname1error.style.visibility = "visible";
+                cname1error.style.color = "red";
+                return false;
+              }
+              if(designation1.trim()===""){
+                designation1error.innerHTML = "Designation Required*";
+                designation1error.style.visibility = "visible";
+                designation1error.style.color = "red";
+                return false;
+            } 
+            else if (!/^[a-zA-Z]+$/.test(designation1)) {
+                designation1error.innerHTML = "Invalid Designation name";
+                designation1error.style.visibility = "visible";
+                designation1error.style.color = "red";
+                return false;
+                }
+            if(from1.trim()===""){
+                from1error.innerHTML = "From Date Required*";
+                from1error.style.visibility = "visible";
+                from1error.style.color = "red";
+                return false;
+            } 
+            else if(!dateValid(from1)){
+                from1error.innerHTML = "Invalid Date";
+                from1error.style.visibility = "visible";
+                from1error.style.color = "red";
+                return false;
+                }
+            if(to1.trim()===""){
+                to1error.innerHTML = "To Date Required*";
+                to1error.style.visibility = "visible";
+                to1error.style.color = "red";
+                return false;
+            }
+              else if(!dateValid(to1)){
+                to1error.innerHTML = "Invalid Date";
+                to1error.style.visibility = "visible";
+                to1error.style.color = "red";
+                return false;
+
+                }
+        }
+              //company 2
+              if(cname2.length > 0){
+             if (!/^[a-zA-Z]+$/.test(cname2)) {
+                cname2error.innerHTML = "Invalid Company name";
+                cname2error.style.visibility = "visible";
+                cname2error.style.color = "red";
+                return false;
+                }
+            if(designation2.trim()===""){
+                designation2error.innerHTML = "Designation Required*";
+                designation2error.style.visibility = "visible";
+                designation2error.style.color = "red";
+                return false;
+            } 
+            else if (!/^[a-zA-Z]+$/.test(designation2)) {
+                designation2error.innerHTML = "Invalid Designation name";
+                designation2error.style.visibility = "visible";
+                designation2error.style.color = "red";
+                return false;
+                }
+            if(from2.trim()===""){
+                from2error.innerHTML = "From date Required*";
+                from2error.style.visibility = "visible";
+                from2error.style.color = "red";
+                return false;
+            } 
+               else if(!dateValid(from2)){
+                from2error.innerHTML = "Invalid Date";
+                from2error.style.visibility = "visible";
+                from2error.style.color = "red";
+                return false;
+
+            }
+            if(to2.trim()===""){
+                to2error.innerHTML = "To date Required*";
+                to2error.style.visibility = "visible";
+                to2error.style.color = "red";
+                return false;
+            } 
+            
+            else if(!dateValid(to2)){
+                to2error.innerHTML = "Invalid Date";
+                to2error.style.visibility = "visible";
+                to2error.style.color = "red";
+                return false;
+
+                }
+        }
+              //company 3
+            if(cname3.length > 0){
+             if (!/^[a-zA-Z]+$/.test(cname3)) {
+                cname3error.innerHTML = "Invalid Company name";
+                cname3error.style.visibility = "visible";
+                cname3error.style.color = "red";
+                return false;
+                }
+            if(designation3.trim()===""){
+                designation3error.innerHTML = "Designation Required*";
+                designation3error.style.visibility = "visible";
+                designation3error.style.color = "red";
+                return false;
+            } 
+            else if (!/^[a-zA-Z]+$/.test(designation3)) {
+                designation3error.innerHTML = "Invalid Designation name";
+                designation3error.style.visibility = "visible";
+                designation3error.style.color = "red";
+                return false;
+                }
+            if(from3.trim()===""){
+                from3error.innerHTML = "From date Required*";
+                from3error.style.visibility = "visible";
+                from3error.style.color = "red";
+                return false;
+            } 
+            
+              else if(!dateValid(from3)){
+                from3error.innerHTML = "Invalid Date";
+                from3error.style.visibility = "visible";
+                from3error.style.color = "red";
+                return false;
+
+                }
+            if(to3.trim()===""){
+                to3error.innerHTML = "To date Required*";
+                to3error.style.visibility = "visible";
+                to3error.style.color = "red";
+                return false;
+            }
+                if(!dateValid(to3)){
+                to3error.innerHTML = "Invalid Date";
+                to3error.style.visibility = "visible";
+                to3error.style.color = "red";
+                return false;
+                }
+        }
+
+            //Reference1
+            if(refname1.length > 0){
+             if (!/^[a-zA-Z]+$/.test(refname1)) {
+                refname1error.innerHTML = "Invalid Reference name*";
+                refname1error.style.visibility = "visible";
+                refname1error.style.color = "red";
+                return false;
+                }
+            if(refcontact1.trim()===""){
+                refcontact1error.innerHTML = "Contact Number Required*";
+                refcontact1error.style.visibility = "visible";
+                refcontact1error.style.color = "red";
+                return false;
+            }
+              else if (!/^\d{10}$/.test(refcontact1)) {
+                refcontact1error.innerHTML = "Invalid Contact Number*";
+                refcontact1error.style.visibility = "visible";
+                refcontact1error.style.color = "red";
+                return false;
+                }
+
+            if(refrelation1.trim()===""){
+                refrelationerror1.innerHTML = "Relation Required*";
+                refrelationerror1.style.visibility = "visible";
+                refrelationerror1.style.color = "red";
+                return false;
+            }
+                if (!/^[a-zA-Z]+$/.test(refrelation1)) {
+                refrelationerror1.innerHTML = "Invalid Relation*";
+                refrelationerror1.style.visibility = "visible";
+                refrelationerror1.style.color = "red";
+                return false;
+                }
+        }
+            //Reference2
+            if(refname2.length > 0){
+             if (!/^[a-zA-Z]+$/.test(refname2)) {
+                refname2error.innerHTML = "Invalid Reference name*";
+                refname2error.style.visibility = "visible";
+                refname2error.style.color = "red";
+                return false;
+                }
+            if(refcontact2.trim()===""){
+                refcontact2error.innerHTML = "Contact Number Required*";
+                refcontact2error.style.visibility = "visible";
+                refcontact2error.style.color = "red";
+                return false;
+            }
+               else if (!/^\d{10}$/.test(refcontact2)) {
+                refcontact2error.innerHTML = "Invalid Contact Number*";
+                refcontact2error.style.visibility = "visible";
+                refcontact2error.style.color = "red";
+                return false;
+                }
+            if(refrelation2.trim()===""){
+                refrelationerror2.innerHTML = "Relation Required*";
+                refrelationerror2.style.visibility = "visible";
+                refrelationerror2.style.color = "red";
+                return false;
+            }   
+                if (!/^[a-zA-Z]+$/.test(refrelation2)) {
+                refrelationerror2.innerHTML = "Invalid Relation*";
+                refrelationerror2.style.visibility = "visible";
+                refrelationerror2.style.color = "red";
+                return false;
+                }
+            }
+
+            //Preferences
+              if(location === 'select_location'){
+                locationerror.innerHTML = "State required*";
+                locationerror.style.visibility = "visible";
+                locationerror.style.color = "red";
+                return false;
+                }
+
+            if(noticeP.trim()===""){
+                noticeerror.innerHTML = "Notice Period required*";
+                noticeerror.style.visibility = "visible";
+                noticeerror.style.color = "red";
+                return false;
+            }
+              if (!validNotice(noticeP)) {
+                noticeerror.innerHTML = "Invalid Notice Period";
+                noticeerror.style.visibility = "visible";
+                noticeerror.style.color = "red";
+                return false;
+                }
+            if(expectedCTC.trim()===""){
+                expectederror.innerHTML = "Expected CTC required*";
+                expectederror.style.visibility = "visible";
+                expectederror.style.color = "red";
+                return false;
+            }
+             if (expectedCTC.length > 6 || isNaN(expectedCTC)) {
+                expectederror.innerHTML = "Invalid Expected CTC*";
+                expectederror.style.visibility = "visible";
+                expectederror.style.color = "red";
+                return false;
+                }
+            if(currentCTC.length > 0){
+             if (currentCTC.length > 6 || isNaN(currentCTC)) {
+                currenterror.innerHTML = "Invalid Current CTC";
+                currenterror.style.visibility = "visible";
+                currenterror.style.color = "red";
+                return false;
+                }
+            }
+            if(department === 'select_department'){
+                departmenterror.innerHTML = "department required*";
+                departmenterror.style.visibility = "visible";
+                departmenterror.style.color = "red";
+                return false;
+                }
+         }
+
+         function dateValid(dob){
+            let arr = dob.split('/');
+            let date = Number(arr[2]);
+            let month = Number(arr[1]);
+            let year = Number(arr[0]);
+            if(date>=1 && date<=30 && month>=1 && month<=12 && year>=1900 && year<=2024){
+                console.log("date valid");
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        function validNotice(noticeP){
+            let arr = noticeP.split(' ');
+            let monthName = arr[1];
+            let month = Number(arr[0]);
+            if(month>=1 && month<=12 && monthName=='month'){
+                console.log("notice period valid");
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        // //checkbox validating
+        function validateCheckbox() {
+            const englishCheckboxes = document.getElementById("englishCheckbox");
+            const hindiCheckboxes = document.getElementById("hindiCheckbox");
+            const gujaratiCheckboxes = document.getElementById("gujaratiCheckbox");
+            if(englishCheckbox.checked){
+                enableCheckboxes("Read1","Write1","Speak1")
+            }
+            else{
+                disableCheckboxes("Read1","Write1","Speak1")
+            }
+            if(hindiCheckbox.checked){
+                enableCheckboxes("Read2","Write2","Speak2")
+            }
+            else{
+                disableCheckboxes("Read2","Write2","Speak2")
+            }
+            if(gujaratiCheckbox.checked){
+                enableCheckboxes("Read3","Write3","Speak3")
+            }
+            else{
+                disableCheckboxes("Read3","Write3","Speak3")
+            }
+        }
+        // //validating technologies known
+        function validateTechnology() {
+            const phpCheckboxes = document.getElementById("phpCheckboxes");
+            const laravelCheckboxes = document.getElementById("laravelCheckboxes");
+            const mysqlCheckboxes = document.getElementById("mysqlCheckboxes");
+            const oracleCheckboxes = document.getElementById("oracleCheckboxes");
+            if(phpCheckboxes.checked){
+                enableCheckboxes("beginner1","mid1","expert1")
+            }
+            else{
+                disableCheckboxes("beginner1","mid1","expert1")
+            }
+            if(laravelCheckboxes.checked){
+                enableCheckboxes("beginner2","mid2","expert2")
+            }
+            else{
+                disableCheckboxes("beginner2","mid2","expert2")
+            }
+            if(mysqlCheckboxes.checked){
+                enableCheckboxes("beginner3","mid3","expert3")
+            }
+            else{
+                disableCheckboxes("beginner3","mid3","expert3")
+            }
+            if(oracleCheckboxes.checked){
+                enableCheckboxes("beginner4","mid4","expert4")
+            }
+            else{
+                disableCheckboxes("beginner4","mid4","expert4")
+            }
+        }
+         //enabling checkbox function
+         function enableCheckboxes(...checkBoxId){
+            for(const id of checkBoxId){
+                console.log(id);
+                document.getElementById(id).disabled = false;
+
+            }
+        }
+        //disabling checkbox function
+        function disableCheckboxes(...checkBoxId){
+            for(const id of checkBoxId){
+                document.getElementById(id).disabled = true;
+                document.getElementById(id).checked = false;
+            }
+        }
+    </script>
+    </body>
+
+</html>
