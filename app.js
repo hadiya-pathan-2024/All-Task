@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+require('dotenv').config()
 app.set('view engine','ejs');
 app.use(express.static('public'));
 var mysql = require('mysql2');
@@ -16,10 +17,11 @@ var authentication = require('./middleware/authentication.js');
 
 //database connection
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Dev@123",
-    database: "all_tasks"
+    host: `${process.env.HOST}`,
+    user: `${process.env.DBUSER}`,
+    password: `${process.env.DBPASSWORD}`,
+    database: `${process.env.DATABASE}`,
+    port: 3306
 });
 
 con.connect(function(err){
@@ -42,8 +44,7 @@ app.get("/", (req, res) => {
     // console.log(req.body);
     let { fname,lname,email, password } = req.body;
     console.log(req.body);
-    email = email.toLowerCase();
-  
+    email = email.toLowerCase();  
     password = await bcrypt.hash(password, 10);
     const sqlQuery = `INSERT INTO register (fname, lname, email, pwd) VALUES('${fname}', '${lname}','${email}', '${password}')`;
     console.log("inserted");
