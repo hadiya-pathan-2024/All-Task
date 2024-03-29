@@ -7,18 +7,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <h1>LOGIN FORM</h1>
+  <br>
+   <center> <h1 style="color:  rgb(16, 117, 117);">LOGIN FORM</h1></center>
     <br><br><br>
-    <form class="form-horizontal" action="/loginCheck" method="post" id="login_form">
+    <center>
+    <form class="form-horizontal" action="/loginCheck" method="post" id="login_form" style="background-color: rgba(163, 230, 230, 0.938); width: 50%;">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="lgemail">Email:</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="lgemail" name="lgemail" placeholder="Enter Email">
+              <br><br>
+              <input type="email" class="form-control" id="lgemail" name="lgemail" placeholder="Enter Email" onkeyup="checkIfExistsEmail(this)">
+              <span style="color: red;" id="correct"></span>
             </div>
         </div>
         <br>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="lgpassword">Password:</label>
           <div class="col-sm-10">
             <input type="password" class="form-control" id="lgpassword" name="lgpassword" placeholder="Enter password">
           </div>
@@ -27,14 +29,88 @@
         <br>
         <a href="/forgot"><p>Forgot Password?</p></a>
         <br>
-        <br>
         <center>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-default" id="submit" style="background-color: green;" value="Submit">
+                <input type="submit" class="btn btn-default" id="submit" style="background-color: rgb(16, 117, 117);" value="Submit">
               </div>
             </div>
         </center> 
+        <br><br>
       </form>
+    </center>
+    <br>
+   <center><p>Don't have an account? <a href="/">Sign up</a></p></center>
 </body>
+<script>
+  let submitBtn = document.getElementById('submit');
+let emailExists;
+function disableButton() {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = 0.5;
+    submitBtn.addEventListener("mouseenter", (e) => {
+        e.target.style.cursor = "not-allowed"
+    })
+}
+
+function activateButton() {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = 1;
+    submitBtn.addEventListener("mouseenter", (e) => {
+        e.target.style.cursor = "pointer"
+    })
+}
+disableButton();
+  let password = document.getElementById("lgpassword");
+let errorSpan, pval, passwordValidationRegex, isPasswordCorrect;
+password.addEventListener("keyup", (e) => {
+    errorSpan = document.getElementById("perror");
+    pval = e.target.value;
+    passwordValidationRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/
+    isPasswordCorrect = passwordValidationRegex.test(pval);
+
+    if (isPasswordCorrect) {
+        globalPassword = e.target.value
+        success = true;
+        errorSpan.innerText = "";
+        errorSpan.classList.add("hidden")
+        activateSubmitButton();
+    } else {
+        errorSpan.style.color = "red"
+        errorSpan.innerText = `Password must contain One Capital Letter, One Special Character and Should have a length of more than 8 digits`;
+        errorSpan.classList.remove("hidden")
+        success = false
+        activateSubmitButton();
+    }
+
+})
+  ////user exixts
+async function checkIfExistsEmail(e, event) {
+    let userEntered = e.value;
+
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Regular expression pattern for email validation
+
+    let isValidEmail = emailRegex.test(userEntered); // Test if the userEntered value matches the emailRegex pattern
+    console.log();
+    if (isValidEmail) {
+        email_success = true;
+        document.getElementById("correct").innerHTML = ""
+        activateSubmitButton();
+    } else {
+        email_success = false;
+        document.getElementById("correct").innerHTML = "This is not a valid email"
+        activateSubmitButton();
+    }
+}
+
+function activateSubmitButton() {
+    if (success && email_success) {
+        // submitBtn.disabled = false;  
+        activateButton();
+    } else {
+        disableButton();
+        // submitBtn.disabled = true;
+    }
+}
+</script>
 </html>

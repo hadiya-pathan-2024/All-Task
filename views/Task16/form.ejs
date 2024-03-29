@@ -74,8 +74,8 @@
                 <fieldset>
                    <legend>Education Details</legend> 
                    
-                   <input type="button" value="Add Row" onclick="rowAdd()" style="background-color: green;">
-                   <input type="button" value="Delete Row" onclick="rowDelete()" style="background-color: red;">
+                   <!-- <input type="button" value="Add Row" onclick="rowAdd()" style="background-color: green;">
+                   <input type="button" value="Delete Row" onclick="rowDelete()" style="background-color: red;"> -->
                    <br><br>
                 <div class="mainDiv">
              
@@ -319,388 +319,16 @@
             <p style="display: inline; visibility: hidden;" id="departmenterror">error</p><br><br>
             </fieldset> 
             </div>
-            <br><br><br>
+            <!-- <br><br><br>
             <input type="button" id="prevButton" onclick="nextPrev(-1)" value="Previous">
-            <input type="button" id="nextButton" onclick="nextPrev(1)" value="Next">
+            <input type="button" id="nextButton" onclick="nextPrev(1)" value="Next"> -->
 
             <br><br><br>
-          
+            <input type="submit" id="submitBtn" value="submit">
        </form>
-       <input type="submit" id="submitBtn" value="submit" style="display: none;" onclick="postingData()">
-       <br>
-       <a href="/data" style="display: none;" id="dataBtn">Show Records</a>
+       
        <script>
-        var currentTab = 0;
-        showTab(currentTab);
-
-        function showTab(n){
-            var x = document.getElementsByClassName("tab");
-            x[n].style.display = 'block';
-            for(var i=0;i<x.length;i++)
-            {
-                if(i===currentTab)
-                {
-                    x[i].style.display = 'block';
-                }
-                else{
-                    x[i].style.display = 'none';
-                }
-            }
-
-
-            if(n == 0){
-                document.getElementById('prevButton').style.display = 'none';
-            }
-            else{
-                document.getElementById('prevButton').style.display = 'inline';
-            }
-            if(n == (x.length - 1)){
-                document.getElementById('nextButton').style.display = "none";
-                document.getElementById("submitBtn").style.display = "block";
-            }
-            else{
-                document.getElementById('nextButton').style.display = "block";
-                document.getElementById("submitBtn").style.display = "none";
-            }
-        }
-
-        function nextPrev(n){
-            var x = document.getElementsByClassName("tab");
-            
-            x[currentTab].style.display = 'none';
-    
-            currentTab = currentTab + n;
-
-            if(currentTab >= x.length){
-                document.getElementById('form1').submit();
-                return false;
-            }
-            showTab(currentTab);
-        }
- 
-            
-        async function postingData(){
-            document.getElementById('dataBtn').style.display = 'block';
-            let id = document.getElementById('id').value;
-            let fname = document.getElementById('fname').value;
-            let lname = document.getElementById('lname').value;
-            let desig = document.getElementById('desig').value;
-            let emailid = document.getElementById('emailid').value;
-            let Pnumber = document.getElementById('Pnumber').value;
-            let address = document.getElementById('address').value;
-            let add2 = document.getElementById('add2').value;
-            let city = document.getElementById('city').value;
-            let state = document.getElementById('state').value;
-            let statusRelation = document.getElementById('statusRelation').value;
-            let zipcode = document.getElementById('zipcode').value;
-            let dob = document.getElementById('dob').value;
-            let gender = document.getElementsByName('gender');
-            let gendervalue;
-
-            for(let i=0;i<gender.length;i++){
-                if(gender[i].checked === true)
-                {
-                    gendervalue = gender[i].value;
-                    break;
-                }
-            }
-
-            //education
-            let count = 0;
-            let edu_id = document.getElementsByName('edu_id');
-            let eduArr = [];
-
-            let SBoardName = document.getElementById('SBoardName').value;
-            let SBoardNameArr = document.getElementsByName('SBoardName');
-            let spassYear = document.getElementsByName('SPassYear');
-            let sperYear = document.getElementsByName('MPerc');
-
-            for(let i=0;i<SBoardNameArr.length;i++)
-            {
-                if(SBoardNameArr[i].value != 'select_course')
-                {
-                    count++;
-                }
-                else{
-                    break;
-                }
-            }
-            let boardArr = [];
-            let yearArr = [];
-            let perArr = [];
-            for(let j=0;j<count;j++)
-            {
-                boardArr.push(SBoardNameArr[j].value.trim())
-                yearArr.push(spassYear[j].value.trim())
-                perArr.push(sperYear[j].value.trim());
-                eduArr.push(edu_id[j].value);
-            }
-
-            /////work experience
-            let countExp=0;
-            let cid = document.getElementsByName('cname');
-            let cidArr = []; 
-            let cname1 = document.getElementById('cname1').value;
-            let cnameArr = document.getElementsByName('CName1');
-            let designationArr = document.getElementsByName('Desig1');
-            let fromArr = document.getElementsByName('From1');
-            let toArr = document.getElementsByName('To1');
-            for(let k=0;k<cnameArr.length;k++)
-            {
-                if(cnameArr[k].value != '')
-                {
-                    countExp++;
-                }
-                else{
-                    break;
-                }
-            }
-            let companyNameArr = [];
-            let companyDesigArr = [];
-            let companyFromArr = [];
-            let companyToArr = [];
-            for(let z=0;z<countExp;z++)
-            {
-                companyNameArr.push(cnameArr[z].value.trim());
-                companyDesigArr.push(designationArr[z].value.trim());
-                companyFromArr.push(fromArr[z].value.trim());
-                companyToArr.push(toArr[z].value.trim());
-                cidArr.push(cid[z].value);
-            }
-
-           // Reference contact
-           //  Ref1
-            let countRef=0;
-            let refName = document.getElementsByName('Cname');
-            let refContact = document.getElementsByName('Cnum');
-            let refRelation = document.getElementsByName('relation');
-            let refid = document.getElementsByName('ref_id');
-            let refArr = [];
-
-            for(let k=0;k<refName.length;k++)
-            {
-                if(refName[k].value != '')
-                {
-                    countRef++;
-                }
-                else{
-                    break;
-                }
-            }
-            let refNameArr = [];
-            let refNumArr = [];
-            let refRelationArr = [];
-            
-            for(let z=0;z<countRef;z++)
-            {
-                refNameArr.push(refName[z].value.trim());
-                refNumArr.push(refContact[z].value.trim());
-                refRelationArr.push(refRelation[z].value.trim());
-                refArr.push(refid[z].value);
-            }
-
-            //preferences
-             let location = document.getElementById('location').value;
-            let noticeP = document.getElementById('noticeP').value;
-            let expectedCTC = document.getElementById('expectedCTC').value;
-            let currentCTC = document.getElementById('currentCTC').value;
-            let department = document.getElementById('department').value;
-
-            //lang_known
-            let langid = document.getElementsByName('checkname');
-            let lidArr = [];
-            for(let i=0;i<langid.length;i++)
-            {
-                lidArr.push(langid[i].value);
-            }
-
-            function langKnownFunc(mainId, ...childId){
-                let objLang = {};
-                let mainCheck = document.getElementById(mainId);
-                
-                let mainCheckVal = mainCheck.value;
-                if(mainCheck.checked === true)
-                {
-                    let arrCheck = [];
-                    for(let id of childId)
-                    {
-                        var idd = document.getElementById(id);
-                        if(idd.checked === true)
-                        {
-                            arrCheck.push('1');
-                        }
-                        else{
-                            arrCheck.push('0');
-                        }
-                       
-                    }
-                    objLang[mainCheckVal] = arrCheck;
-                }
-                return objLang;
-            }
-          
-            let engVal = langKnownFunc("englishCheckbox","Read1","Write1","Speak1");
-            let hindiVal = langKnownFunc("hindiCheckbox","Read2","Write2","Speak2");
-            let gujaratiVal = langKnownFunc("gujaratiCheckbox","Read3","Write3","Speak3");
-
-            let arrlangKnown = [];
-            // if(Object.keys(engVal).length != 0)
-            // {
-                arrlangKnown.push(engVal);
-            // }
-            // if(Object.keys(hindiVal).length != 0)
-            // {
-                arrlangKnown.push(hindiVal);
-            // // }
-            // if(Object.keys(gujaratiVal).length != 0)
-            // {
-                arrlangKnown.push(gujaratiVal);
-            // }
-            console.log(arrlangKnown);
-
-            //technology_known
-            let techid = document.getElementsByName('langCheck');
-            let tidArr = [];
-            for(let i=0;i<techid.length;i++)
-            {
-                tidArr.push(techid[i].value);
-            }
-            console.log(tidArr);
-            console.log(lidArr);
-
-            function techRadio(mainId, ...childId){
-                let objRadio = {};
-                let mainRadio = document.getElementById(mainId);
-                let mainVal = mainRadio.value;
-                if(mainRadio.checked === true)
-                {
-                    for(let id of childId)
-                    {
-                        var idd = document.getElementById(id);
-                        if(idd.checked === true)
-                        {
-                            objRadio[mainVal] = idd.value;
-                            break;
-                        }
-                    }
-                };
-                return objRadio;
-            }
-            
-            let phpVal = techRadio("phpCheckboxes","beginner1","mid1","expert1");
-            let laravelVal = techRadio("laravelCheckboxes","beginner2","mid2","expert2");
-            let mysqlVal = techRadio("mysqlCheckboxes","beginner3","mid3","expert3");
-            let oracleVal = techRadio("oracleCheckboxes","beginner4","mid4","expert4");
-
-            let techKnown = [];
-            // if(Object.keys(phpVal).length != 0)
-            // {
-                techKnown.push(phpVal);
-            // }
-            // if(Object.keys(laravelVal).length != 0)
-            // {
-                techKnown.push(laravelVal);
-            // }
-            // if(Object.keys(mysqlVal).length != 0)
-            // {
-                techKnown.push(mysqlVal);
-            // }
-            // if(Object.keys(oracleVal).length != 0)
-            // {
-                techKnown.push(oracleVal);
-            // }
-            console.log(techKnown);
-            console.log("education: "+eduArr);
-            /////postingg
-            try{
-             await fetch('/saveAjax',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  id,fname,lname,desig,emailid,Pnumber,address,add2,city,state,statusRelation,zipcode,dob,gendervalue,
-                  arrlangKnown,techKnown,boardArr,yearArr,perArr,companyNameArr,companyDesigArr,companyFromArr,companyToArr,
-                  refNameArr,refNumArr,refRelationArr,location,noticeP,expectedCTC,currentCTC,department,eduArr,cidArr,refArr,tidArr,lidArr
-                })
-            }
-            )
-
-        }
-        catch (error){
-        console.log(error);
-    }
-    }
-   
-        // function checkRadio(){
-        //   var data6 = 
-        //   let obj = JSON.parse(data6)
-        //   console.log(obj);
-        // }
-        // checkRadio()
-        function rowAdd(){
-            let div1 = document.getElementsByClassName("div");
-            let mainDiv = document.getElementsByClassName("mainDiv");
-            let copy = div1[0].cloneNode(true);
-            mainDiv[0].appendChild(copy);
-            // var table = document.getElementById('table1');
-            // var rows = table.rows.length;
-
-            // var insert = table.insertRow(rows);
-            // var cell4 = insert.insertCell(0);
-            // var cell1 = insert.insertCell(1);
-            // var cell2 = insert.insertCell(2);
-            // var cell3 = insert.insertCell(3);
-
-            // let boardData = [
-            // "Select Board",
-            // "GSEB",
-            // "HSC",
-            // "BSCIT",
-            // "MSCIT"];
-            // var yearTag = document.createElement("label");
-            // var PercTag = document.createElement("label");
-
-            // var checkbox = document.createElement("input");
-            // var dropdown = document.createElement("select");
-            // boardData.forEach(function(val) {
-            //     let option = document.createElement("option");
-            //     option.innerHTML = val;
-            //     dropdown.appendChild(option);
-            //     })
-            // var year = document.createElement("input");
-            // yearTag.innerText = "Year";
-            // year.append(yearTag);
-            // var percentage = document.createElement("input");
-            // PercTag.innerHTML = "Percentage";
-            // percentage.appendChild(PercTag);
-
-            // checkbox.type = "checkbox"
-            // dropdown.type = "select";
-            // year.type = "text";
-            // percentage.type = "text";
-            // cell4.appendChild(checkbox)
-            // cell1.appendChild(dropdown);
-            // // cell2.appendChild(year);
-            // cell2.appendChild(yearTag)
-            // cell3.appendChild(year);
-            // cell3.appendChild(PercTag);
-            // cell3.appendChild(percentage)
-
-            
-        }
-        function rowDelete(){
-            var div2 = document.getElementsByClassName('div');
-            let mainDiv = document.getElementsByClassName("mainDiv");
-            if(div2.length<=3){
-                return;
-            }
-            mainDiv[0].removeChild(div2[div2.length-1]);
-            
-        }
         function validateForm(){
-            return true;
             let fname = document.getElementById('fname').value;
             let fnameerror = document.getElementById('fnameerror');
             let lname = document.getElementById('lname').value;
@@ -1011,7 +639,19 @@
                 return false;
                 }
             }
-
+                //bCourse
+            // if(buni.trim()===""){
+            //     bunierror.innerHTML = "University name required*";
+            //     bunierror.style.visibility = "visible";
+            //     bunierror.style.color = "red";
+            //     return false;
+            // }
+            //  if (!/^[a-zA-Z.,@]+$/.test(buni)) {
+            //     bunierror.innerHTML = "Invalid University name";
+            //     bunierror.style.visibility = "visible";
+            //     bunierror.style.color = "red";
+            //     return false;
+            //     }
             if(bcourse != 'select_course'){
             if(bpassyear.trim()===""){
                 bpassyearerror.innerHTML = "Bachelors Passing year required*";
@@ -1038,7 +678,16 @@
                 return false;
                 }
             }
+            //mcourse
            
+            // if(muni.length > 0){
+            //  if (!/^[a-zA-Z.,@]+$/.test(muni)) {
+            //     munierror.innerHTML = "Invalid University name";
+            //     munierror.style.visibility = "visible";
+            //     munierror.style.color = "red";
+            //     return false;
+            //     }
+            // }
             if(mcourse != 'select_course'){
                 if(mpassyear.trim()===""){
                 mpassyearerror.innerHTML = "Masters Passing year required*";
