@@ -14,7 +14,6 @@ var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 var authentication = require('./middleware/authentication.js');
 
-
 //database connection
 var con = mysql.createConnection({
     host: `${process.env.HOST}`,
@@ -60,7 +59,6 @@ app.get("/", (req, res) => {
       console.log(err);
     }
   });
-  
   app.get("/activate-account/:token", async(req, res) => {
     let token = req.params.token;
     let decode = jwt.verify(token, "JWT_SECRET");

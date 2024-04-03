@@ -17,7 +17,7 @@
     <body>
         <center><h1>JOB APPLICATION FORM</h1></center>
         
-        <form name="form" id="form1" action="/update" method="post" onsubmit="return validateForm()">
+        <form name="form" id="form1" action="/update" method="post">
             
             <div class="tab">
               <fieldset> 
@@ -331,9 +331,19 @@
        <a href="/data" style="display: none;" id="dataBtn">Show Records</a>
        <script>
         var currentTab = 0;
+        // var result = validateForm();
+        //     if(result === false)
+        //     {
+        //         document.getElementById('nextButton').disabled = true;
+        //         // document.getElementById('prevButton').disabled = true;
+        //     }
+        //     else{
+        //         document.getElementById('nextButton').disabled = false;
+        //     }
         showTab(currentTab);
 
         function showTab(n){
+          
             var x = document.getElementsByClassName("tab");
             x[n].style.display = 'block';
             for(var i=0;i<x.length;i++)
@@ -365,12 +375,20 @@
         }
 
         function nextPrev(n){
+             var result = validateForm();
+            if(result === false)
+            {
+                // document.getElementById('nextButton').disabled = true;
+                return
+                // document.getElementById('prevButton').disabled = true;
+            }
+            
             var x = document.getElementsByClassName("tab");
             
             x[currentTab].style.display = 'none';
-    
+           
             currentTab = currentTab + n;
-
+           
             if(currentTab >= x.length){
                 document.getElementById('form1').submit();
                 return false;
@@ -700,7 +718,7 @@
             
         }
         function validateForm(){
-            return true;
+            if(currentTab == 0){
             let fname = document.getElementById('fname').value;
             let fnameerror = document.getElementById('fnameerror');
             let lname = document.getElementById('lname').value;
@@ -726,6 +744,141 @@
             let gender = document.getElementsByName('gender').value;
             let gendererror = document.getElementById('gendererror');
 
+            if(fname.trim()===""){
+                fnameerror.innerHTML = "First name required*";
+                fnameerror.style.visibility = "visible";
+                fnameerror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z]+$/.test(fname)) {
+                fnameerror.innerHTML = "Invalid First name*";
+                fnameerror.style.visibility = "visible";
+                fnameerror.style.color = "red";
+                return false;
+                }
+            if(lname.trim()===""){
+                lnameerror.innerHTML = "Last name required*";
+                lnameerror.style.visibility = "visible";
+                lnameerror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z]+$/.test(lname)) {
+                lnameerror.innerHTML = "Invalid Last name*";
+                lnameerror.style.visibility = "visible";
+                lnameerror.style.color = "red";
+                return false;
+                }
+            if(desig.trim()===""){
+                desigerror.innerHTML = "Designation required*";
+                desigerror.style.visibility = "visible";
+                desigerror.style.color = "red";
+                return false;
+            }   
+             if (!/^[a-zA-Z]+$/.test(desig)) {
+                desigerror.innerHTML = "Invalid Designation*";
+                desigerror.style.visibility = "visible";
+                desigerror.style.color = "red";
+                return false;
+                }   
+           
+            if(emailid.trim()===""){
+                emailiderror.innerHTML = "Email Id required*";
+                emailiderror.style.visibility = "visible";
+                emailiderror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(emailid)) {
+                emailiderror.innerHTML = "Invalid Email Id*";
+                emailiderror.style.visibility = "visible";
+                emailiderror.style.color = "red";
+                return false;
+                } 
+            if(Pnumber.trim()===""){
+                Pnumbererror.innerHTML = "Contact Number required*";
+                Pnumbererror.style.visibility = "visible";
+                Pnumbererror.style.color = "red";
+                return false;
+            }
+             if (!/^\d{10}$/.test(Pnumber)) {
+                Pnumbererror.innerHTML = "Invalid Contact Number*";
+                Pnumbererror.style.visibility = "visible";
+                Pnumbererror.style.color = "red";
+                return false;
+                }
+                
+                var male = document.getElementById('male').checked 
+            var female = document.getElementById('female').checked 
+            var others = document.getElementById('others').checked
+            if(male === false && female === false && others === false){
+                gendererror.innerHTML = "Gender required*";
+                gendererror.style.visibility = "visible";
+                gendererror.style.color = "red";
+                return false;
+            }
+            if(statusRelation === 'select_relation'){
+                relationerror.innerHTML = "Relation Status required*";
+                relationerror.style.visibility = "visible";
+                relationerror.style.color = "red";
+                return false;
+                }
+            
+            if(address.trim()===""){
+                addresserror.innerHTML = "Address required*";
+                addresserror.style.visibility = "visible";
+                addresserror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z0-9.!#$%&'*@+/=?_{|}~-]+$/.test(address)) {
+                addresserror.innerHTML = "Invalid Address*";
+                addresserror.style.visibility = "visible";
+                addresserror.style.color = "red";
+                return false;
+                }
+            if(city.trim()===""){
+                cityerror.innerHTML = "City required*";
+                cityerror.style.visibility = "visible";
+                cityerror.style.color = "red";
+                return false;
+            }
+             if (!/^[a-zA-Z]+$/.test(city)) {
+                cityerror.innerHTML = "Invalid City";
+                cityerror.style.visibility = "visible";
+                cityerror.style.color = "red";
+                return false;
+                } 
+             if(state === 'select_state'){
+                stateerror.innerHTML = "State required*";
+                stateerror.style.visibility = "visible";
+                stateerror.style.color = "red";
+                return false;
+                }
+            
+            if(zipcode.trim()===""){
+                zipcodeerror.innerHTML = "Zipcode required*";
+                zipcodeerror.style.visibility = "visible";
+                zipcodeerror.style.color = "red";
+                return false;
+            }
+             if (!/^\d{5}$/.test(zipcode)) {
+                zipcodeerror.innerHTML = "Invalid ZipCode*";
+                zipcodeerror.style.visibility = "visible";
+                zipcodeerror.style.color = "red";
+                return false;
+                }
+            if(dob.trim()===""){
+                doberror.innerHTML = "DOB required*";
+                doberror.style.visibility = "visible";
+                doberror.style.color = "red";
+                return false;
+            }
+            if(!dateValid(dob)){
+                doberror.innerHTML = "Invalid Date";
+                doberror.style.visibility = "visible";
+                doberror.style.color = "red";
+                return false;
+
+                }
+            }
            // Education
 
             //ssc
@@ -821,142 +974,8 @@
             let department = document.getElementById('department').value;
             let departmenterror = document.getElementById('departmenterror');
 
-            if(fname.trim()===""){
-                fnameerror.innerHTML = "First name required*";
-                fnameerror.style.visibility = "visible";
-                fnameerror.style.color = "red";
-                return false;
-            }
-             if (!/^[a-zA-Z]+$/.test(fname)) {
-                fnameerror.innerHTML = "Invalid First name*";
-                fnameerror.style.visibility = "visible";
-                fnameerror.style.color = "red";
-                return false;
-                }
-            if(lname.trim()===""){
-                lnameerror.innerHTML = "Last name required*";
-                lnameerror.style.visibility = "visible";
-                lnameerror.style.color = "red";
-                return false;
-            }
-             if (!/^[a-zA-Z]+$/.test(lname)) {
-                lnameerror.innerHTML = "Invalid Last name*";
-                lnameerror.style.visibility = "visible";
-                lnameerror.style.color = "red";
-                return false;
-                }
-            if(desig.trim()===""){
-                desigerror.innerHTML = "Designation required*";
-                desigerror.style.visibility = "visible";
-                desigerror.style.color = "red";
-                return false;
-            }   
-             if (!/^[a-zA-Z]+$/.test(desig)) {
-                desigerror.innerHTML = "Invalid Designation*";
-                desigerror.style.visibility = "visible";
-                desigerror.style.color = "red";
-                return false;
-                }   
+            
            
-            if(emailid.trim()===""){
-                emailiderror.innerHTML = "Email Id required*";
-                emailiderror.style.visibility = "visible";
-                emailiderror.style.color = "red";
-                return false;
-            }
-             if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(emailid)) {
-                emailiderror.innerHTML = "Invalid Email Id*";
-                emailiderror.style.visibility = "visible";
-                emailiderror.style.color = "red";
-                return false;
-                } 
-            if(Pnumber.trim()===""){
-                Pnumbererror.innerHTML = "Contact Number required*";
-                Pnumbererror.style.visibility = "visible";
-                Pnumbererror.style.color = "red";
-                return false;
-            }
-             if (!/^\d{10}$/.test(Pnumber)) {
-                Pnumbererror.innerHTML = "Invalid Contact Number*";
-                Pnumbererror.style.visibility = "visible";
-                Pnumbererror.style.color = "red";
-                return false;
-                }
-                
-            var male = document.getElementById('male').checked 
-            var female = document.getElementById('female').checked 
-            var others = document.getElementById('others').checked
-            if(male === false && female === false && others === false){
-                gendererror.innerHTML = "Gender required*";
-                gendererror.style.visibility = "visible";
-                gendererror.style.color = "red";
-                return false;
-            }
-            if(statusRelation === 'select_relation'){
-                relationerror.innerHTML = "Relation Status required*";
-                relationerror.style.visibility = "visible";
-                relationerror.style.color = "red";
-                return false;
-                }
-            
-            if(address.trim()===""){
-                addresserror.innerHTML = "Address required*";
-                addresserror.style.visibility = "visible";
-                addresserror.style.color = "red";
-                return false;
-            }
-             if (!/^[a-zA-Z0-9.!#$%&'*@+/=?_{|}~-]+$/.test(address)) {
-                addresserror.innerHTML = "Invalid Address*";
-                addresserror.style.visibility = "visible";
-                addresserror.style.color = "red";
-                return false;
-                }
-            if(city.trim()===""){
-                cityerror.innerHTML = "City required*";
-                cityerror.style.visibility = "visible";
-                cityerror.style.color = "red";
-                return false;
-            }
-             if (!/^[a-zA-Z]+$/.test(city)) {
-                cityerror.innerHTML = "Invalid City";
-                cityerror.style.visibility = "visible";
-                cityerror.style.color = "red";
-                return false;
-                } 
-             if(state === 'select_state'){
-                stateerror.innerHTML = "State required*";
-                stateerror.style.visibility = "visible";
-                stateerror.style.color = "red";
-                return false;
-                }
-            
-            if(zipcode.trim()===""){
-                zipcodeerror.innerHTML = "Zipcode required*";
-                zipcodeerror.style.visibility = "visible";
-                zipcodeerror.style.color = "red";
-                return false;
-            }
-             if (!/^\d{5}$/.test(zipcode)) {
-                zipcodeerror.innerHTML = "Invalid ZipCode*";
-                zipcodeerror.style.visibility = "visible";
-                zipcodeerror.style.color = "red";
-                return false;
-                }
-            if(dob.trim()===""){
-                doberror.innerHTML = "DOB required*";
-                doberror.style.visibility = "visible";
-                doberror.style.color = "red";
-                return false;
-            }
-            if(!dateValid(dob)){
-                doberror.innerHTML = "Invalid Date";
-                doberror.style.visibility = "visible";
-                doberror.style.color = "red";
-                return false;
-
-                }
-            
-            
             //education
             if(SBoardName != 'select_course'){
             if(SPassYear.trim()===""){
