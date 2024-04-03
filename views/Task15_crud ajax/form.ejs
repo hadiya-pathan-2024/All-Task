@@ -330,7 +330,6 @@
        <br>
        <a href="/data" style="display: none;" id="dataBtn">Show Records</a>
        <script>
-        var currentTab = 0;
         // var result = validateForm();
         //     if(result === false)
         //     {
@@ -340,64 +339,126 @@
         //     else{
         //         document.getElementById('nextButton').disabled = false;
         //     }
-        showTab(currentTab);
+   
+        
+            var tabElemant = document.getElementsByClassName("tab");
+            tabElemant[0].style.display = 'block';
+            let previous =  document.getElementById('prevButton');
+            let next = document.getElementById('nextButton');
+            let j = 0;
+            let saveData = document.getElementById("submitBtn")
+            saveData.style.display = "none";
+            previous.disabled = true;
+            for(let i=1;i<tabElemant.length;i++){
+                tabElemant[i].style.display = "none";
+            }
 
-        function showTab(n){
-          
-            var x = document.getElementsByClassName("tab");
-            x[n].style.display = 'block';
-            for(var i=0;i<x.length;i++)
-            {
-                if(i===currentTab)
-                {
-                    x[i].style.display = 'block';
+            function nextPrev(increment){
+                let val = validateForm();
+                if(val === false){
+                    return
                 }
                 else{
-                    x[i].style.display = 'none';
+                    next.disabled = false;
+                    previous.disabled = false;
+                }
+                j = j + increment;
+
+                next.disabled = (j === 6);
+                previous.disabled = (j === 0);
+
+                if(j == 6){
+                    saveData.style.display = "block"
+                }
+                else{
+                    saveData.style.display = "none"
+                }
+                for(let k=0;k<tabElemant.length;k++){
+                    if(k == j){
+                        tabElemant[k].style.display = "block"
+                    }
+                    else{
+                        tabElemant[k].style.display = "none"
+                    }
                 }
             }
 
-
-            if(n == 0){
-                document.getElementById('prevButton').style.display = 'none';
-            }
-            else{
-                document.getElementById('prevButton').style.display = 'inline';
-            }
-            if(n == (x.length - 1)){
-                document.getElementById('nextButton').style.display = "none";
-                document.getElementById("submitBtn").style.display = "block";
-            }
-            else{
-                document.getElementById('nextButton').style.display = "block";
-                document.getElementById("submitBtn").style.display = "none";
-            }
-        }
-
-        function nextPrev(n){
-             var result = validateForm();
-            if(result === false)
-            {
-                // document.getElementById('nextButton').disabled = true;
-                return
-                // document.getElementById('prevButton').disabled = true;
-            }
+        // function nextPrev(n){
+          
             
-            var x = document.getElementsByClassName("tab");
+        //     var x = document.getElementsByClassName("tab");
             
-            x[currentTab].style.display = 'none';
+        //     x[currentTab].style.display = 'none';
            
-            currentTab = currentTab + n;
+        //     currentTab = currentTab + n;
            
-            if(currentTab >= x.length){
-                document.getElementById('form1').submit();
-                return false;
-            }
-            showTab(currentTab);
-        }
+        //     if(currentTab >= x.length){
+        //         document.getElementById('form1').submit();
+        //         return false;
+        //     }
+        //     showTab(currentTab);
+        // }
  
             
         async function postingData(){
+            //preferences
+            let location = document.getElementById('location').value;
+            let locationerror = document.getElementById('locationerror');
+            let noticeP = document.getElementById('noticeP').value;
+            let noticeerror = document.getElementById('noticeerror');
+            let expectedCTC = document.getElementById('expectedCTC').value;
+            let expectederror = document.getElementById('expectederror');
+            let currentCTC = document.getElementById('currentCTC').value;
+            let currenterror = document.getElementById('currenterror');
+            let department = document.getElementById('department').value;
+            let departmenterror = document.getElementById('departmenterror');
+
+                   //Preferences
+                   if(location === 'select_location'){
+                locationerror.innerHTML = "State required*";
+                locationerror.style.visibility = "visible";
+                locationerror.style.color = "red";
+                return false;
+                }
+
+            if(noticeP.trim()===""){
+                noticeerror.innerHTML = "Notice Period required*";
+                noticeerror.style.visibility = "visible";
+                noticeerror.style.color = "red";
+                return false;
+            }
+              if (!validNotice(noticeP)) {
+                noticeerror.innerHTML = "Invalid Notice Period";
+                noticeerror.style.visibility = "visible";
+                noticeerror.style.color = "red";
+                return false;
+                }
+            if(expectedCTC.trim()===""){
+                expectederror.innerHTML = "Expected CTC required*";
+                expectederror.style.visibility = "visible";
+                expectederror.style.color = "red";
+                return false;
+            }
+             if (expectedCTC.length > 6 || isNaN(expectedCTC)) {
+                expectederror.innerHTML = "Invalid Expected CTC*";
+                expectederror.style.visibility = "visible";
+                expectederror.style.color = "red";
+                return false;
+                }
+            if(currentCTC.length > 0){
+             if (currentCTC.length > 6 || isNaN(currentCTC)) {
+                currenterror.innerHTML = "Invalid Current CTC";
+                currenterror.style.visibility = "visible";
+                currenterror.style.color = "red";
+                return false;
+                }
+            }
+            if(department === 'select_department'){
+                departmenterror.innerHTML = "department required*";
+                departmenterror.style.visibility = "visible";
+                departmenterror.style.color = "red";
+                return false;
+                }
             document.getElementById('dataBtn').style.display = 'block';
             let id = document.getElementById('id').value;
             let fname = document.getElementById('fname').value;
@@ -518,11 +579,11 @@
             }
 
             //preferences
-             let location = document.getElementById('location').value;
-            let noticeP = document.getElementById('noticeP').value;
-            let expectedCTC = document.getElementById('expectedCTC').value;
-            let currentCTC = document.getElementById('currentCTC').value;
-            let department = document.getElementById('department').value;
+            //  let location = document.getElementById('location').value;
+            // let noticeP = document.getElementById('noticeP').value;
+            // let expectedCTC = document.getElementById('expectedCTC').value;
+            // let currentCTC = document.getElementById('currentCTC').value;
+            // let department = document.getElementById('department').value;
 
             //lang_known
             let langid = document.getElementsByName('checkname');
@@ -718,7 +779,8 @@
             
         }
         function validateForm(){
-            if(currentTab == 0){
+            
+            if(j == 0){
             let fname = document.getElementById('fname').value;
             let fnameerror = document.getElementById('fnameerror');
             let lname = document.getElementById('lname').value;
@@ -878,9 +940,11 @@
                 return false;
 
                 }
+                return true;
+                
             }
            // Education
-
+            if(j == 1){
             //ssc
             let SBoardName = document.getElementById('SBoardName').value;
             let sboarderror = document.getElementById('sboarderror');
@@ -914,70 +978,8 @@
             let mpercentage = document.getElementById('mpercentage').value;
             let mpercentagerror = document.getElementById('mpercentagerror');
 
-            //work Experience
-            // company 1
-            let cname1 = document.getElementById('cname1').value;
-            let cname1error = document.getElementById('cname1error');
-            let designation1 = document.getElementById('designation1').value;
-            let designation1error = document.getElementById('designation1error');
-            let from1 = document.getElementById('from1').value;
-            let from1error = document.getElementById('from1error');
-            let to1 = document.getElementById('to1').value;
-            let to1error = document.getElementById('to1error');
-
-            // //company 2
-            let cname2 = document.getElementById('cname2').value;
-            let cname2error = document.getElementById('cname2error');
-            let designation2 = document.getElementById('designation2').value;
-            let designation2error = document.getElementById('designation2error');
-            let from2 = document.getElementById('from2').value;
-            let from2error = document.getElementById('from2error');
-            let to2 = document.getElementById('to2').value;
-            let to2error = document.getElementById('to2error');
-
-              //company 3
-            let cname3 = document.getElementById('cname3').value;
-            let cname3error = document.getElementById('cname3error');
-            let designation3 = document.getElementById('designation3').value;
-            let designation3error = document.getElementById('designation3error');
-            let from3 = document.getElementById('from3').value;
-            let from3error = document.getElementById('from3error');
-            let to3 = document.getElementById('to3').value;
-            let to3error = document.getElementById('to3error');
-
-           // Reference contact
-           //  Ref1
-            let refname1 = document.getElementById('refname1').value;
-            let refname1error = document.getElementById('refname1error');
-            let refcontact1 = document.getElementById('refcontact1').value;
-            let refcontact1error = document.getElementById('refcontact1error');
-            let refrelation1 = document.getElementById('refrelation1').value;
-            let refrelationerror1 = document.getElementById('refrelationerror1');
-
-            //Ref2
-            let refname2 = document.getElementById('refname2').value;
-            let refname2error = document.getElementById('refname2error');
-            let refcontact2 = document.getElementById('refcontact2').value;
-            let refcontact2error = document.getElementById('refcontact2error');
-            let refrelation2 = document.getElementById('refrelation2').value;
-            let refrelationerror2 = document.getElementById('refrelationerror2');
-
-            //preferences
-             let location = document.getElementById('location').value;
-            let locationerror = document.getElementById('locationerror');
-            let noticeP = document.getElementById('noticeP').value;
-            let noticeerror = document.getElementById('noticeerror');
-            let expectedCTC = document.getElementById('expectedCTC').value;
-            let expectederror = document.getElementById('expectederror');
-            let currentCTC = document.getElementById('currentCTC').value;
-            let currenterror = document.getElementById('currenterror');
-            let department = document.getElementById('department').value;
-            let departmenterror = document.getElementById('departmenterror');
-
-            
-           
-            //education
-            if(SBoardName != 'select_course'){
+        //education
+        if(SBoardName != 'select_course'){
             if(SPassYear.trim()===""){
                 spasserror.innerHTML = "Passing year required*";
                 spasserror.style.visibility = "visible";
@@ -1088,9 +1090,42 @@
             
         }
 
+            }
+            if(j == 2){
+            //work Experience
+            // company 1
+            let cname1 = document.getElementById('cname1').value;
+            let cname1error = document.getElementById('cname1error');
+            let designation1 = document.getElementById('designation1').value;
+            let designation1error = document.getElementById('designation1error');
+            let from1 = document.getElementById('from1').value;
+            let from1error = document.getElementById('from1error');
+            let to1 = document.getElementById('to1').value;
+            let to1error = document.getElementById('to1error');
+
+            // //company 2
+            let cname2 = document.getElementById('cname2').value;
+            let cname2error = document.getElementById('cname2error');
+            let designation2 = document.getElementById('designation2').value;
+            let designation2error = document.getElementById('designation2error');
+            let from2 = document.getElementById('from2').value;
+            let from2error = document.getElementById('from2error');
+            let to2 = document.getElementById('to2').value;
+            let to2error = document.getElementById('to2error');
+
+              //company 3
+            let cname3 = document.getElementById('cname3').value;
+            let cname3error = document.getElementById('cname3error');
+            let designation3 = document.getElementById('designation3').value;
+            let designation3error = document.getElementById('designation3error');
+            let from3 = document.getElementById('from3').value;
+            let from3error = document.getElementById('from3error');
+            let to3 = document.getElementById('to3').value;
+            let to3error = document.getElementById('to3error');
+
             //work experience 
             //company 1
-             if(cname1.length > 0){
+            if(cname1.length > 0){
               if (!/^[a-zA-Z]+$/.test(cname1)) {
                 cname1error.innerHTML = "Invalid Company name";
                 cname1error.style.visibility = "visible";
@@ -1231,8 +1266,29 @@
                 }
         }
 
-            //Reference1
-            if(refname1.length > 0){
+            }
+            
+
+            if(j == 5){
+           // Reference contact
+           //  Ref1
+            let refname1 = document.getElementById('refname1').value;
+            let refname1error = document.getElementById('refname1error');
+            let refcontact1 = document.getElementById('refcontact1').value;
+            let refcontact1error = document.getElementById('refcontact1error');
+            let refrelation1 = document.getElementById('refrelation1').value;
+            let refrelationerror1 = document.getElementById('refrelationerror1');
+
+            //Ref2
+            let refname2 = document.getElementById('refname2').value;
+            let refname2error = document.getElementById('refname2error');
+            let refcontact2 = document.getElementById('refcontact2').value;
+            let refcontact2error = document.getElementById('refcontact2error');
+            let refrelation2 = document.getElementById('refrelation2').value;
+            let refrelationerror2 = document.getElementById('refrelationerror2');
+
+             //Reference1
+             if(refname1.length > 0){
              if (!/^[a-zA-Z]+$/.test(refname1)) {
                 refname1error.innerHTML = "Invalid Reference name*";
                 refname1error.style.visibility = "visible";
@@ -1299,52 +1355,12 @@
                 }
             }
 
-            //Preferences
-              if(location === 'select_location'){
-                locationerror.innerHTML = "State required*";
-                locationerror.style.visibility = "visible";
-                locationerror.style.color = "red";
-                return false;
-                }
-
-            if(noticeP.trim()===""){
-                noticeerror.innerHTML = "Notice Period required*";
-                noticeerror.style.visibility = "visible";
-                noticeerror.style.color = "red";
-                return false;
             }
-              if (!validNotice(noticeP)) {
-                noticeerror.innerHTML = "Invalid Notice Period";
-                noticeerror.style.visibility = "visible";
-                noticeerror.style.color = "red";
-                return false;
-                }
-            if(expectedCTC.trim()===""){
-                expectederror.innerHTML = "Expected CTC required*";
-                expectederror.style.visibility = "visible";
-                expectederror.style.color = "red";
-                return false;
+            if(j == 6){
+            
             }
-             if (expectedCTC.length > 6 || isNaN(expectedCTC)) {
-                expectederror.innerHTML = "Invalid Expected CTC*";
-                expectederror.style.visibility = "visible";
-                expectederror.style.color = "red";
-                return false;
-                }
-            if(currentCTC.length > 0){
-             if (currentCTC.length > 6 || isNaN(currentCTC)) {
-                currenterror.innerHTML = "Invalid Current CTC";
-                currenterror.style.visibility = "visible";
-                currenterror.style.color = "red";
-                return false;
-                }
-            }
-            if(department === 'select_department'){
-                departmenterror.innerHTML = "department required*";
-                departmenterror.style.visibility = "visible";
-                departmenterror.style.color = "red";
-                return false;
-                }
+        
+     
          }
 
          function dateValid(dob){
