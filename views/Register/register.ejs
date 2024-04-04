@@ -22,12 +22,14 @@
                 <br><br>
               <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name">
             </div>
+            <span id="ferror" class="hidden"></span>
         </div>
         <br>
         <div class="form-group">
             <div class="col-sm-10">
               <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name">
             </div>
+            <span id="lerror" class="hidden"></span>
         </div>
         <br>
         <div class="form-group">
@@ -132,13 +134,61 @@ repassword.addEventListener("keyup", (e) => {
     }
 });
 
+//fname valid
+let fnameValid = document.getElementById("fname");
+let errorFname,fval;
+fnameValid.addEventListener("keyup", (e) => {
+    errorFname = document.getElementById("ferror");
+    fval = e.target.value;
+    fnameValidRegex = /^[a-zA-Z]+$/
+    isfnameCorrect = fnameValidRegex.test(fval);
+
+    if (isfnameCorrect) {
+        success = true;
+        errorFname.innerText = "";
+        errorFname.classList.add("hidden")
+        activateSubmitButton();
+    } else {
+        errorFname.style.color = "red"
+        errorFname.innerText = `First Name must contain Alphabets only`;
+        errorFname.classList.remove("hidden")
+        success = false
+        activateSubmitButton();
+    }
+
+})
+
+
+//lname valid
+let lnameValid = document.getElementById("lname");
+let errorLname,lval;
+lnameValid.addEventListener("keyup", (e) => {
+    errorLname = document.getElementById("lerror");
+    lval = e.target.value;
+    lnameValidRegex = /^[a-zA-Z]+$/
+    islnameCorrect = lnameValidRegex.test(lval);
+
+    if (islnameCorrect) {
+        success = true;
+        errorLname.innerText = "";
+        errorLname.classList.add("hidden")
+        activateSubmitButton();
+    } else {
+        errorLname.style.color = "red"
+        errorLname.innerText = `Last Name must contain Alphabets only`;
+        errorLname.classList.remove("hidden")
+        success = false
+        activateSubmitButton();
+    }
+
+})
 ////user exixts
 async function checkIfExistsEmail(e, event) {
     let userEntered = e.value;
 
-    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Regular expression pattern for email validation
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
 
-    let isValidEmail = emailRegex.test(userEntered); // Test if the userEntered value matches the emailRegex pattern
+    let isValidEmail = emailRegex.test(userEntered);
     console.log();
     if (isValidEmail) {
         email_success = true;

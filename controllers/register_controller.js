@@ -41,7 +41,7 @@ const forgotPassPost = async (req, res) => {
       return res.status(401).json({ ans: "error", msg: "This account has not been activated yet." });
     }
     console.log(results);
-    // return res.status(401).json({ ans: "error", msg: "This account has not been activated yet." });
+
     let payload = { email };
     const token = jwt.sign(payload, "JWT_SECRET");
     console.log("token" + token);
@@ -59,8 +59,8 @@ const newPasswordPage = (req, res) => {
   return res.render("Register/newpass");
 }
 
-const resetPasswordRender = (req,res)=>{
-  res.render("Register/resetPassword",{token:req.cookies.token});
+const resetPasswordRender = (req, res) => {
+  res.render("Register/resetPassword", { token: req.cookies.token });
 }
 
 const resetPassword = (req, res) => {

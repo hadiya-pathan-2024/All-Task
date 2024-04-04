@@ -10,34 +10,33 @@ const { delimited_search_task13 } = require("../controllers/delimited_search_con
 const { jsonplaceholder_task14, details } = require("../controllers/jsonplacehoder_controller_task14.js")
 const { crud_ajax_task15, saving_ajax, get_all_records, update_user } = require("../controllers/crud_ajax_controller_task15.js")
 const { crud_without_ajax_task16, get_all_records_without_ajax, update_user_without_ajax, update_function } = require("../controllers/crud_without_ajax_controller_task16.js")
+const {all_events} = require("../controllers/all_events_controller_task1.js")
+const {dynamic_row} = require("../controllers/dynamic_row_controller_task2.js")
+const {ku_kube} = require("../controllers/ku_kube_controller_task3.js")
+const {tic_tac} = require("../controllers/tic_tac_controller_task4.js")
+const {ehya_web} = require("../controllers/ehya_web_controller_task5.js")
+const {awan_web} = require("../controllers/awan_web_controller_task6.js")
+const {hirex_web} = require("../controllers/hirex_web_controller_task7.js")
 //task1
-app.get('/task1', authentication, function (req, res) {
-    res.render('Task1_JS Events/Task1_AllEvents');
-});
+app.get('/task1', authentication,all_events)
+
 // //task2
-app.get('/task2', authentication, function (req, res) {
-    res.render('Task2_Dynamic Row/Task2_AddingRowCol');
-})
+app.get('/task2', authentication, dynamic_row);
+
 //task3
-app.get('/task3', authentication, function (req, res) {
-    res.render('Task3_ku ku kube/Task3_kukukube');
-})
+app.get('/task3', authentication,ku_kube )
+
 //task4
-app.get('/task4', authentication, function (req, res) {
-    res.render('Task4_tic tac toe/Task4_tictactoe');
-})
+app.get('/task4', authentication, tic_tac)
+
 //task5
-app.get('/task5', authentication, function (req, res) {
-    res.render('Task5_ehya website/Task5_ehyaWebsite');
-})
+app.get('/task5', authentication,ehya_web)
+
 //task6
-app.get('/task6', authentication, function (req, res) {
-    res.render('Task6_awan Website/Website_awanHoster');
-})
+app.get('/task6', authentication, awan_web)
+
 //task7
-app.get('/task7', authentication, function (req, res) {
-    res.render('Task7_hirex website/Website_Hirex');
-})
+app.get('/task7', authentication, hirex_web)
 
 //task8
 app.get('/task8', authentication, orderby_task8);

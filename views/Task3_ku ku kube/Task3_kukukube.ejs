@@ -13,7 +13,7 @@
                 opacity: 0.3;
             }
             body{
-                background-color: red;
+                /* background-color: red; */
             }
             
         </style>
@@ -22,8 +22,8 @@
         <h1>HADIYA PATHAN Date:02-02-2024</h1>
      
         
-        <h4 id="Timer" style="color: white; " ></h4>
-        <h4 id="scoreId" style="color: white; text-align: center;" ></h4>
+        <h4 id="Timer"></h4>
+        <h4 id="scoreId" style=" text-align: center;" ></h4>
         <table border="1" align="center" id="t1"  style="border-color: white; border-style: ridge; margin-top:150px;">
             <tr id="row1">
                 <td style="background-color: blue;"></td>
@@ -81,13 +81,16 @@
                 const colorChange = modifyColor();
 
                 for(var i=0;i<tdcell.length;i++){
+                    let colorChanging = 'rgb(' + colorChange.red + ',' + colorChange.green + ',' + colorChange.pink + ')';
+                    console.log(colorChanging);
+                    tdcell[i].style.backgroundColor = 'rgb(' + colorChange.red + ',' + colorChange.green + ',' + colorChange.pink + ')';
                     if(i === randomvalue)
                     {
-                        tdcell[i].style.backgroundColor = 'rgb(' + colorChange.red + ',' + colorChange.green + ',' + colorChange.pink + ')';
+                        tdcell[i].style.backgroundColor = colorChanging;
                         tdcell[i].style.opacity="0.5";
                     }
                     else {
-                        tdcell[i].style.backgroundColor = 'rgb(' + colorChange.red + ',' + colorChange.green + ',' + colorChange.pink + ')';
+                        tdcell[i].style.backgroundColor = colorChanging;
                         tdcell[i].removeEventListener("click",playGame);
                         tdcell[i].style.opacity="1";
                     }
