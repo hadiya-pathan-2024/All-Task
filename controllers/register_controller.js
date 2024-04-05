@@ -121,10 +121,11 @@ const registerController = async (req, res) => {
   console.log(req.body);
   email = email.toLowerCase();
   password = await bcrypt.hash(password, 10);
-  const sqlQuery = `INSERT INTO register (fname, lname, email, pwd) VALUES('${fname}', '${lname}','${email}', '${password}')`;
+  const sqlQuery = `INSERT INTO register (fname, lname, email, pwd) VALUES(?,?,?,?)`;
   console.log("inserted");
+  const params = [fname,lname,email,password];
   try {
-    executeInsert = await con.promise().execute(sqlQuery);
+    executeInsert = await con.promise().execute(sqlQuery,params);
     if (executeInsert[0]) {
       let payload = { email };
       const token = jwt.sign(payload, "JWT_SECRET");

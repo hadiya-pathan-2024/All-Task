@@ -3,9 +3,9 @@ var con = require("../connection/connection");
 let func = require("../task13Function");
 const delimited_search_task13 = async (req, res) => {
     let query1 = req.query.searchQuery || "";
-    if(query1 === ""){
+    if(query1.trim() === ""){
         res.render('Task13_delimited search/delimitedSearch.ejs', {
-            query: query1,
+            query: query1.trim(),
             noQuery: 0
         });
     }

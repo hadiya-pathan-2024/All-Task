@@ -141,9 +141,10 @@ const saving_ajax = async (req, res) => {
     }
     else {
         const sql = `insert into basic_detail(firstname, lastname, designation, email, phone, gender, relation, add1, add2, city, state, zipcode, dob ) 
-        values("${fname}","${lname}","${desig}","${emailid}","${Pnumber}","${gendervalue}","${statusRelation}","${address}",
-       "${add2}","${city}","${state}","${zipcode}","${dob}")`;
-        con.query(sql, function (err, data) {
+        values(?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+       const params = [fname,lname,desig,emailid,Pnumber,gendervalue,statusRelation,address,
+       add2,city,state,zipcode,dob]
+        con.query(sql,params, function (err, data) {
             if (err) throw err;
             idmain = data.insertId;
             console.log(idmain);
@@ -152,17 +153,20 @@ const saving_ajax = async (req, res) => {
             for (var i = 0; i < boardArr.length; i++) {
                 // console.log(formData[i].SPassYear);
                 console.log(idmain);
-                var query = `insert into education_details (employeeid,sscboard, spassingyear, spercentage) VALUES ('${idmain}','${boardArr[i]}','${yearArr[i]}','${perArr[i]}')`;
-                con.query(query, function (err, data) {
+                var query = `insert into education_details (employeeid,sscboard, spassingyear, spercentage) VALUES (?,?,?,?)`;
+                const params1 = [idmain,boardArr[i],yearArr[i],perArr[i]]
+                con.query(query,params1, function (err, data) {
                     if (err) throw err;
                 })
             }
 
             ////work experience
             for (var j = 0; j < companyNameArr.length; j++) {
-                var query1 = `insert into work_experience (employeeid, company_name, Designation, from_date, to_date) VALUES ('${idmain}','${companyNameArr[j]}',
-                    '${companyDesigArr[j]}','${companyFromArr[j]}','${companyToArr[j]}')`;
-                con.query(query1, function (err, data) {
+                // var query1 = `insert into work_experience (employeeid, company_name, Designation, from_date, to_date) VALUES ('${idmain}','${companyNameArr[j]}',
+                //     '${companyDesigArr[j]}','${companyFromArr[j]}','${companyToArr[j]}')`;
+                var query1 = `insert into work_experience (employeeid, company_name, Designation, from_date, to_date) VALUES (?,?,?,?,?)`;
+                const params2 = [idmain,companyNameArr[j],companyDesigArr[j],companyFromArr[j],companyToArr[j]]
+                con.query(query1,params2, function (err, data) {
                     if (err) throw err;
                 })
             }
@@ -175,7 +179,7 @@ const saving_ajax = async (req, res) => {
                     console.log("val: " + val);
                     let valArr = arrlangKnown[i][val];
                     let query2 = `insert into langKnown(employeeid, lang_name, can_read, can_write, can_speak) values ('${idmain}','${val}','${valArr[0]}','${valArr[1]}','${valArr[2]}')`;
-
+                    
                     con.query(query2, (err, result) => {
                         if (err) throw err;
                         else {

@@ -273,7 +273,7 @@
             <div class="tab">
                 <fieldset>
                     <legend>Reference Contact</legend>
-                <input type="hidden" id="ref_id" name="ref_id" value="<%= data5 ? data5[0].referenceid : '' %>">
+                <input type="hidden" id="ref_id" name="ref_id" value="<%= data5 && data5[0] ? data5[0].referenceid : '' %>">
                 Name <input type="text" name="Cname" id="refname1" value="<%= data5 && data5[0] ? data5[0].ref_name : '' %>">
                 <p style="display: inline; visibility: hidden;" id="refname1error">error</p>
                 Contact Number <input type="text" name="Cnum" id="refcontact1" value="<%= data5 && data5[0] ? data5[0].contact : '' %>">
@@ -765,9 +765,7 @@
             // cell2.appendChild(yearTag)
             // cell3.appendChild(year);
             // cell3.appendChild(PercTag);
-            // cell3.appendChild(percentage)
-
-            
+            // cell3.appendChild(percentage) 
         }
         function rowDelete(){
             var div2 = document.getElementsByClassName('div');
