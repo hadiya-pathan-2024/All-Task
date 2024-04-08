@@ -10,7 +10,7 @@ const attendance_task9 = async (req, res) => {
     // const year = req.query.year || "2023";
     select = req.query.select || "2023-12-30";
     arr = select.split("-");
-
+    try{
     con.query(`select student_master.studentId,student_master.firstName,count(attendance_master.record) as total_days 
     from attendance_master
     left join student_master 
@@ -38,6 +38,11 @@ const attendance_task9 = async (req, res) => {
                 });
             }
         })
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
 }
 
 module.exports = { attendance_task9 }
